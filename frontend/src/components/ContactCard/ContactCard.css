@@ -1,0 +1,103 @@
+.card {
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    max-width: 1355px;
+    margin: 40px auto;
+    flex-wrap: wrap; /* Allows wrapping on smaller screens */
+    gap: 20px; /* Adds spacing between sections */
+  }
+  
+  .infoSection {
+    flex: 1;
+    padding-right: 16px;
+    min-width: 250px; /* Prevents sections from collapsing */
+  }
+  
+  .title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 8px;
+  }
+  
+  .name {
+    font-size: 14px;
+    margin: 8px 0;
+  }
+  
+  .email {
+    font-size: 14px;
+    margin: 8px 0;
+  }
+  
+  .emailLink {
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .mapSection {
+    flex: 1;
+    text-align: center;
+    min-width: 250px; /* Prevents sections from collapsing */
+  }
+  
+  .map {
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 8px;
+  }
+  
+  /* Responsive Design */
+  
+  /* Medium screens (tablets) */
+  @media (max-width: 1024px) {
+    .card {
+      flex-direction: column; /* Stack sections vertically */
+      align-items: center; /* Center align sections */
+      text-align: center; /* Center text alignment */
+    }
+  
+    .infoSection {
+      padding-right: 0;
+      text-align: center; /* Center align text */
+    }
+  
+    .map {
+      height: 300px; /* Increase map height for better visibility */
+    }
+  }
+  
+  /* Small screens (mobile devices) */
+  @media (max-width: 768px) {
+    .card {
+      padding: 16px 8px; /* Reduce padding for smaller screens */
+    }
+  
+    .map {
+      height: 250px; /* Adjust map height */
+    }
+  }
+  
+  /* Extra small screens (narrow mobile devices) */
+  @media (max-width: 480px) {
+    .card {
+      padding: 8px; /* Further reduce padding for extra small screens */
+    }
+  
+    .title {
+      font-size: 14px; /* Reduce font size for titles */
+    }
+  
+    .name, .email {
+      font-size: 12px; /* Reduce font size for text */
+    }
+  
+    .map {
+      height: 200px; /* Adjust map height */
+    }
+  }

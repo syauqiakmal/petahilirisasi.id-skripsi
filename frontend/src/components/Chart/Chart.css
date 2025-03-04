@@ -1,0 +1,98 @@
+.chart-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .chart-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  
+  .chart-box-sentiment {
+    flex: 1;
+    /* background: linear-gradient(135deg, #153875, #488dbb); */
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .chart-box-country {
+    flex: 2;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    height: 300px; /* Set a fixed height */
+    overflow-y: auto; /* Enable vertical scrolling */
+    padding: 20px;
+  }
+  
+  #chart-title {
+    color: #333;
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 20px;
+  }
+  
+  .chart-content {
+    height: 250px;
+  }
+
+  .mention-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+  }
+  
+  .mention-avatar .avatar-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  
+  .mention-text {
+    color: #333;
+  }
+  
+  .mention-text h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .mention-text p {
+    margin: 5px 0 0;
+    font-size: 14px;
+    color: #333;
+  }
+
+  .mention-text span {
+    font-weight: normal;
+    background-color: transparent;
+  }
+  
+  .mention-text span[style*="background-color: #ffd700;"] {
+    font-weight: bold;
+    background-color: #ffd700;
+  }
+
+  a{
+    text-decoration: none;
+  }
+
+  .viral-link :hover{
+    background-color: #d2d2d2;
+    border-radius: 10px;
+  }
+  
+  @media (max-width: 768px) {
+    .chart-row {
+      flex-direction: column; /* Stack charts vertically on small screens */
+    }
+  }

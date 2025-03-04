@@ -1,0 +1,168 @@
+.map-showcase {
+    text-align: center;
+    padding: 40px 20px; /* Adjusted padding for smaller screens */
+  }
+  
+  .map-showcase h2 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+  }
+  
+  .map-showcase p {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 20px; /* Reduced margin for smaller screens */
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .icon-section {
+    display: flex;
+    flex-wrap: wrap; /* Wrap icons for smaller screens */
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  
+  .icon-container {
+    cursor: pointer;
+    transition: transform 0.3s;
+    padding: 20px;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    text-align: left;
+    max-width: 428px;
+    width: 100%; /* Full width for smaller screens */
+    box-sizing: border-box;
+    align-items: center;
+  }
+  
+  .icon-container.active {
+    border-color: #2C509D;
+    background-color: #f0f8ff;
+  }
+  
+  .icon-image {
+    width: 80px; /* Adjusted size for smaller screens */
+    height: auto;
+    border-radius: 5px;
+    margin-bottom: 10px;
+  }
+  
+  .icon-info h4 {
+    font-size: 1.1rem;
+    margin: 5px 0;
+  }
+  
+  .icon-info p {
+    font-size: 0.9rem;
+    color: #777;
+    margin: 0px;
+  }
+  
+  .map-image-container {
+    margin-top: 20px;
+  }
+  
+  .map-image {
+    width: 100%;
+    max-width: 1315px;
+    height: auto;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  @media (max-width: 1295px) {
+    .map-showcase {
+      padding: 30px 20px;
+    }
+    .icon-section {
+      gap: 12px; /* Reduced gap for medium screens */
+    }
+    .icon-container {
+      max-width: 390px; /* Reduced max-width for medium screens */
+    }
+
+    .map-image{
+      width: 1165px;
+    }
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 1024px) {
+    .map-image{
+      max-width: 100%;
+  }
+
+    .map-showcase {
+      padding: 30px 20px;
+    }
+    .icon-section {
+      gap: 12px; /* Reduced gap for medium screens */
+    }
+    .icon-container {
+      max-width: 320px; /* Reduced max-width for medium screens */
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .map-showcase {
+      padding: 20px 10px;
+    }
+    .map-showcase h2 {
+      font-size: 1.5rem; /* Adjusted font size for smaller screens */
+    }
+    .map-showcase p {
+      font-size: 0.80rem;
+    }
+    .icon-container {
+      max-width: 230px; /* Reduced max-width for smaller screens */
+    }
+    .icon-image {
+      width: 70px; /* Reduced size for icons on smaller screens */
+    }
+    .map-image{
+        max-width: 710px;
+    }
+    .map-description {
+        padding: 0px 30px;
+    }
+  }
+  
+  @media (max-width: 500px) {
+    .icon-info h4 {
+      font-size: 1rem; /* Further reduced font size for very small screens */
+    }
+
+    .icon-info p {
+      display: none; /* Further reduced font size for very small screens */
+    }
+    
+    .map-showcase h2 {
+      font-size: 1.25rem; /* Further reduced font size for very small screens */
+    }
+    .map-showcase p {
+      font-size: 0.75rem;
+    }
+    .icon-container {
+      display: flex;
+      max-width: 100%; /* Full width for very small screens */
+      gap: 6px; 
+      justify-content: center;
+      padding: 8px;
+    }
+   
+    .icon-section {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(0px, 1fr)); /* Responsif */
+     
+    }
+    .icon-image {
+      width: 40px; /* Further reduced size for icons */
+    }
+
+    .map-image{
+      width: 400px;
+    }
+  }  
