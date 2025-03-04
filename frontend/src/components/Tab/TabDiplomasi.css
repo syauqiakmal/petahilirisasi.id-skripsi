@@ -1,0 +1,146 @@
+.tabs-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  max-width: 1355px;
+  margin: 0 auto;
+  margin-bottom: 40px;
+  padding: 10px;
+  background-color: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .tabs-sidebar {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .tabs-intro {
+    background-color: #eaf6ff;
+    border-radius: 12px;
+    padding: 20px;
+    font-size: 14px;
+    color: #1f1f1f;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 0;
+  }
+  
+  .tabs-intro::before {
+    content: 'ℹ️';
+    font-size: 18px;
+    display: inline-block;
+  }
+  
+  .tab-button {
+    background: transparent;
+    border: none;
+    padding: 10px;
+    text-align: left;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 8px;
+    transition: background-color 0.3s;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 94%;
+  }
+  
+  .tab-button.active {
+    background-color: #f0f8ff;
+    color: #0073e6;
+    width: 94%;
+  }
+  
+  .arrow {
+    font-size: 12px;
+  }
+  
+  .submenu {
+    margin-left: 15px;
+    list-style: none;
+    padding: 0;
+  }
+  
+  .submenu-button {
+    background: transparent;
+    border: none;
+    font-size: 14px;
+    cursor: pointer;
+    margin: 5px 0;
+    transition: background-color 0.3s;
+    text-align: left;
+    font-size: 16px;
+    border-radius: 8px;
+    width: 94%;
+    height: 30px;
+  }
+  
+  .submenu-button.active {
+    background-color: #eaf6ff;
+    color: #0073e6;
+    font-weight: bold;
+  }
+  
+  .tabs-content {
+    flex: 3;
+    padding: 20px;
+    background: #fff;
+    position: relative;
+  }
+  
+  .tabs-content h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+  }
+  
+  .tabs-content h3 {
+    font-size: 18px;
+    margin-top: 20px;
+  }
+  
+  .tabs-content p {
+    font-size: 16px;
+    margin-top: 5px;
+  }
+  
+  .tabs-image {
+    max-width: 100%;
+    border-radius: 12px;
+    margin-top: 20px;
+  }
+  
+  #tabs-image {
+    max-width: 941px;
+    margin-top: 20px;
+    border-radius: 12px;
+    width: 100%;
+    margin-bottom: 50px;
+  }
+  
+  #visit-map-button {
+    font-weight: 600;
+    display: inline-block;
+    background-color: #2C509D;
+    border-radius: 10px;
+    padding: 10px 20px;
+    color: #fff;
+    font-size: 16px;
+    text-decoration: none;
+    transition: background-color 0.3s, transform 0.2s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    margin-top: 30px;
+  }

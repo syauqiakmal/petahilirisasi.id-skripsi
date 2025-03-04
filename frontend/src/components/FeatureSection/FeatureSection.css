@@ -1,0 +1,137 @@
+/* Feature Section Container */
+.feature-section {
+  padding: 80px;
+  background: #2C509D;
+  background-image: url('../assets/big-ring.png'); /* Path to your texture image */
+  background-repeat: no-repeat;
+  opacity: 0.9;
+  background-position: right top; /* Position the texture image to the right */
+  background-size: 30%; /* Adjust the size of the texture image */
+  margin: 0 auto;
+  display: grid;
+  align-items: center;
+  text-decoration: none;
+}
+
+.feature-section a {
+  text-decoration: none;
+}
+
+#feature-section-content {
+  text-align: left;
+  color: #fff;
+  margin-bottom: 40px;
+  max-width: 1355px;
+  margin: 0 auto;
+}
+
+#feature-section-heading {
+  font-size: 2rem;
+  margin: 0 0 16px;
+  font-weight: bold;
+}
+
+#feature-section-description {
+  font-size: 1rem;
+}
+
+/* Feature Grid */
+#feature-section-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Default: 3 columns */
+  grid-auto-rows: auto;
+  max-width: 1355px;
+  margin: 0 auto;
+  align-items: stretch; /* Ensure cards stretch evenly */
+  gap: 10px;
+}
+
+.feature-card{
+  margin-bottom: 20px;
+}
+
+/* Responsive Design */
+
+/* Large Tablets (992px and below) */
+@media (max-width: 992px) {
+  .feature-section {
+    text-align: center;
+    padding: 40px;
+  }
+
+  #feature-section-content {
+    text-align: center; /* Center text for smaller devices */
+  }
+
+  #feature-section-heading {
+    font-size: 1.75rem;
+  }
+
+  #feature-section-grid {
+    grid-template-columns: repeat(3, 1fr); /* Two cards per row */
+    gap: 20px;
+  }
+}
+
+/* Tablets (768px and below) */
+@media (max-width: 768px) {
+  #feature-section-grid {
+    grid-template-columns: repeat(3, 1fr); /* One card per row */
+    padding: 0 15px;
+    gap: 10px;
+  }
+
+  .feature-section {
+    padding: 20px;
+  }
+
+  #feature-section-heading {
+    font-size: 1.5rem;
+  }
+
+  #feature-section-description {
+    font-size: 0.9rem;
+  }
+}
+
+/* Phones (425px and below) */
+@media (max-width: 500px) {
+  #feature-section-grid {
+    grid-template-columns: 1fr; /* Single column for small screens */
+    gap: 5px;
+  }
+
+  .feature-section {
+    padding: 15px;
+  }
+
+  #feature-section-heading {
+    font-size: 1.25rem;
+  }
+
+  #feature-section-description {
+    font-size: 0.85rem;
+    margin: 0 auto;
+    width: 370px;
+    margin-bottom: 30px;
+  }
+}
+
+@media (max-width: 425px) {
+  .feature-section {
+    padding: 40px 10px;
+    justify-content: center;
+  }
+
+  #feature-section-heading {
+    font-size: 1.15rem;
+  }
+
+  #feature-section-description {
+    font-size: 0.8rem;
+  }
+
+  #feature-section-grid {
+    gap: 7px;
+  }
+}

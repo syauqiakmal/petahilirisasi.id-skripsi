@@ -1,0 +1,19 @@
+
+/*  Sidebar Mineral */
+#mineral-active {
+    background-color: '#F3F5F7';
+  }
+  
+  .mineral-inactive {
+    background-color: '#FFF';
+  }
+  
+  .mineral-inactive:hover {
+    background-color: '#F3F5F7';
+    text-decoration: solid;
+  }
+
+  .mineral-active:hover {
+    background-color: '#F3F5F7';
+    text-decoration: solid;
+  }
