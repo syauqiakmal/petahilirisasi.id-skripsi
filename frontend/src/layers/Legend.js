@@ -24,13 +24,13 @@ const Legend = ({isOpen, isBits}) => {
             bottom: isOpen ? '120px' : '-250px',
             left: '28px',
             height: 'fit-content',
-            maxHeight: 'calc(100% - 20px)',
+            maxHeight: 'calc(60% - 2px)',
             width: '250px',
             borderRadius: '10px',
             backgroundColor: 'rgba(255, 255, 255, 0.95)',
             // transition: 'bottom 0.3s ease-in-out',
             zIndex: 999,
-            padding: '20px',
+            padding: '10px',
         }}>
             <h3 style={{color:'#08709d'}}>Tutupan Lahan Kawasan Hilirisasi</h3>
             <ul style={{ listStyleType: 'none', padding: 0, marginTop: '10px'}}>

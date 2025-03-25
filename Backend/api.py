@@ -27,6 +27,7 @@ from rasterio.enums import Resampling
 import matplotlib.pyplot as plt
 from PIL import Image
 import geopandas as gpd
+from typing import Dict
 
 
 import re
@@ -436,7 +437,7 @@ async def upload_file(file: UploadFile = File(...)):
     finally:
         shutil.rmtree(tmp_dir)
 
-@app.get("/map/data/{table_name}")
+@app.get("/map/Backend/data/{table_name}")
 async def get_data(table_name: str):
     try:
         conn = psycopg2.connect(
@@ -639,91 +640,91 @@ async def get_geojson(table_name: str):
 
 @app.get("/map/raster_morowali/")
 async def get_raster1():
-    return await process_raster_file(r"data/image_export_mchange_bh_box.tiff")
+    return await process_raster_file(r"Backend/data/image_export_mchange_bh_box.tiff")
 
 @app.get("/map/raster_morowali2/")
 async def get_raster1():
-    return await process_raster_file(r"data/image_export_mchange_wd_box.tiff")
+    return await process_raster_file(r"Backend/data/image_export_mchange_wd_box.tiff")
   
 @app.get("/map/raster1/")
 async def get_raster1():
-    return await process_raster_file(r"data/image_export_mchange_geometrynikel.tiff")
+    return await process_raster_file(r"Backend/data/image_export_mchange_geometrynikel.tiff")
 
 @app.get("/map/rasterNikelA/")
 async def get_raster1():
-    return await process_raster_file(r"data/image_export_m00_geometrynikel.tif")
+    return await process_raster_file(r"Backend/data/image_export_m00_geometrynikel.tif")
 
 @app.get("/map/rasterNikelB/")
 async def get_raster1():
-    return await process_raster_file(r"data/image_export_m05_geometrynikel.tif")
+    return await process_raster_file(r"Backend/data/image_export_m05_geometrynikel.tif")
 
 @app.get("/map/rasterNikelC/")
 async def get_raster1():
-    return await process_raster_file(r"data/image_export_m10_geometrynikel.tif")
+    return await process_raster_file(r"Backend/data/image_export_m10_geometrynikel.tif")
 
 @app.get("/map/rasterNikelD/")
 async def get_raster1():
-    return await process_raster_file(r"data/image_export_m15_geometrynikel.tif")
+    return await process_raster_file(r"Backend/data/image_export_m15_geometrynikel.tif")
 @app.get("/map/rasterNikelE/")
 async def get_raster1():
-    return await process_raster_file(r"data/image_export_m20_geometrynikel.tif")
+    return await process_raster_file(r"Backend/data/image_export_m20_geometrynikel.tif")
 
 
 
 
 @app.get("/map/raster2/")
 async def get_raster1():
-    return await process_raster_file(r"data/image_export_mchange_geometrykuarsa.tif")
+    return await process_raster_file(r"Backend/data/image_export_mchange_geometrykuarsa.tif")
 
 
 @app.get("/map/rasterkuarsaA/")
 async def get_raster1():
-    return await process_raster_file(r"data/image_export_m00_geometrykuarsa.tif")
+    return await process_raster_file(r"Backend/data/image_export_m00_geometrykuarsa.tif")
 
 @app.get("/map/rasterkuarsaB/")
 async def get_raster1():
-    return await process_raster_file(r"data/image_export_m05_geometrykuarsa.tif")
+    return await process_raster_file(r"Backend/data/image_export_m05_geometrykuarsa.tif")
 
 @app.get("/map/rasterkuarsaC/")
 async def get_raster1():
-    return await process_raster_file(r"data/image_export_m10_geometrykuarsa.tif")
+    return await process_raster_file(r"Backend/data/image_export_m10_geometrykuarsa.tif")
 
 @app.get("/map/rasterkuarsaD/")
 async def get_raster1():
-    return await process_raster_file(r"data/image_export_m15_geometrykuarsa.tif")
+    return await process_raster_file(r"Backend/data/image_export_m15_geometrykuarsa.tif")
 @app.get("/map/rasterkuarsaE/")
 async def get_raster1():
-    return await process_raster_file(r"data/image_export_m20_geometrykuarsa.tif")
+    return await process_raster_file(r"Backend/data/image_export_m20_geometrykuarsa.tif")
 
 
 
 @app.get("/map/raster3/")
 async def get_raster1():
-    return await process_raster_file(r"data/image_export_mchange_geometrybauksit.tif")
+    return await process_raster_file(r"Backend/data/image_export_mchange_geometrybauksit.tif")
 
 @app.get("/map/rasterbauksitA/")
 async def get_raster1():
-    return await process_raster_file(r"data/image_export_m00_geometrybauksit.tif")
+    return await process_raster_file(r"Backend/data/image_export_m00_geometrybauksit.tif")
 
 @app.get("/map/rasterbauksitB/")
 async def get_raster1():
-    return await process_raster_file(r"data/image_export_m05_geometrybauksit.tif")
+    return await process_raster_file(r"Backend/data/image_export_m05_geometrybauksit.tif")
 
 @app.get("/map/rasterbauksitC/")
 async def get_raster1():
-    return await process_raster_file(r"data/image_export_m10_geometrybauksit.tif")
+    return await process_raster_file(r"Backend/data/image_export_m10_geometrybauksit.tif")
 
 @app.get("/map/rasterbauksitD/")
 async def get_raster1():
-    return await process_raster_file(r"data/image_export_m15_geometrybauksit.tif")
+    return await process_raster_file(r"Backend/data/image_export_m15_geometrybauksit.tif")
 @app.get("/map/rasterbauksitE/")
 async def get_raster1():
-    return await process_raster_file(r"data/image_export_m20_geometrybauksit.tif")
+    return await process_raster_file(r"Backend/data/image_export_m20_geometrybauksit.tif")
 
 
 @app.get("/map/shapefile/")
 async def get_shapefile():
-    zip_path = r"data/world-administrative-boundaries.zip"  # Ganti dengan path ke file .zip Anda
+    zip_path = r"Backend/data/world-administrative-boundaries.zip"  # Ganti dengan path ke file .zip Anda
     feature_collection = process_shapefile(zip_path)
     return await feature_collection
 
@@ -731,15 +732,89 @@ async def get_shapefile():
  
  
  
+async def calculate_area_from_single_band(data: np.ndarray, transform, thresholds: Dict[str, tuple]) -> Dict[str, float]:
+    try:
+        if data is None or data.shape[0] == 0:
+            raise ValueError("Raster data is empty or invalid.")
+
+        print(f"Min Pixel Value: {data[0].min()}, Max Pixel Value: {data[0].max()}")
+
+        # Resolusi Landsat = 30m per piksel -> 900 m² per piksel
+        pixel_area = 30 * 30  # 900 m²
+
+        area_results = {}
+        for category, (min_val, max_val) in thresholds.items():
+            mask = (data[0] >= min_val) & (data[0] <= max_val)
+            pixel_count = np.sum(mask)  # Hitung jumlah piksel dalam kategori ini
+
+            area_m2 = pixel_count * pixel_area  # Konversi ke luas dalam meter persegi
+            area_results[category] = int(area_m2)
+
+            print(f"{category} - Threshold: ({min_val}, {max_val}), Pixels Found: {pixel_count}, Area (m²): {area_m2}")
+
+        return area_results
+
+    except Exception as e:
+        print(f"Error processing raster for area calculation: {e}")
+        raise HTTPException(status_code=500, detail="Internal Server Error")
+
+
+def reproject_raster(input_path, output_path, dst_crs="EPSG:3857"):
+    with rasterio.open(input_path) as src:
+        # Cek apakah raster sudah dalam meter (EPSG:3857)
+        if src.crs.to_string() == dst_crs:
+            print(f"Raster sudah dalam {dst_crs}, tidak perlu reproyeksi.")
+            return input_path  # Langsung gunakan file asli
+
+        # Lakukan transformasi koordinat
+        transform, width, height = calculate_default_transform(
+            src.crs, dst_crs, src.width, src.height, *src.bounds
+        )
+        
+        kwargs = src.meta.copy()
+        kwargs.update({
+            "crs": dst_crs,
+            "transform": transform,
+            "width": width,
+            "height": height
+        })
+
+        with rasterio.open(output_path, "w", **kwargs) as dst:
+            for i in range(1, src.count + 1):
+                reproject(
+                    source=rasterio.band(src, i),
+                    destination=rasterio.band(dst, i),
+                    src_transform=src.transform,
+                    src_crs=src.crs,
+                    dst_transform=transform,
+                    dst_crs=dst_crs,
+                    resampling=Resampling.nearest
+                )
+
+    print(f"Raster berhasil direproyeksi ke {dst_crs}")
+    return output_path  # Kembalikan path raster yang sudah diproses
+    
+ 
 async def process_raster_file(file_path: str):
     raster_images = []
     converted_bounds = []
     try:
+          # Pastikan file raster ada
         if not os.path.isfile(file_path):
             raise HTTPException(status_code=404, detail=f"Raster file not found: {file_path}")
 
+    # Cek CRS raster dan konversi jika perlu
+        with rasterio.open(file_path) as dataset:
+            print(f"CRS Awal: {dataset.crs}")  # Cek CRS sebelum reproyeksi
+        
+        if dataset.crs.to_string() == "EPSG:4326":
+            print("Raster masih dalam EPSG:4326, melakukan reproyeksi ke EPSG:3857...")
+            file_path = reproject_raster(file_path, "reprojected.tif", "EPSG:3857")
+    
+    # Buka kembali raster setelah reproyeksi
         with rasterio.open(file_path) as dataset:
             data = dataset.read()
+
             if data is None or data.shape[0] == 0:
                 raise HTTPException(status_code=404, detail="Invalid or empty raster file.")
 
@@ -750,34 +825,56 @@ async def process_raster_file(file_path: str):
             if num_bands == 1:
                 band_normalized = (data[0] - data[0].min()) / (data[0].max() - data[0].min())
                 rgba_image = cmap(band_normalized)  # Apply colormap
-                rgb_image = (rgba_image[:, :, :3] * 255).astype('uint8')  # Convert to RGB
+                rgb_image = (rgba_image[:, :, :3] * 255).astype('uint8')
                 image = Image.fromarray(rgb_image)
+                
+                # Simpan image ke byte array
+                img_byte_array = BytesIO()
+                image.save(img_byte_array, format='PNG')
+                raster_images.append(img_byte_array.getvalue())
+
+                # Hitung luas berdasarkan nilai piksel (threshold) yang diperbarui
+                thresholds = {
+                        "Tutupan Vegetasi": (20, 89),  # Hijau (#609C60 → #065106)
+                        "Tubuh Air": (170, 185),  # Biru (#071CC8)
+                        "Lahan Terbuka": (210, 255),  # Merah (#FF2828)
+                        "Lahan Kebun": (186, 209),  # Oranye (#FF7D00)
+                        "Daerah Terbangun": (160, 169),  # Cyan (#00FFFF)
+                        "Lahan Restorasi": (0, 20)  # Hijau Gelap (#000000 → #065106)
+                    }
+
+                # Panggil fungsi untuk menghitung luas area per kategori
+                area_result = await calculate_area_from_single_band(data, dataset.transform, thresholds)
             else:
-                bands = [(band - band.min()) / (band.max() - band.min()) * 255 for band in data[:3]]
-                bands = [Image.fromarray(b.astype('uint8')) for b in bands]
-                image = Image.merge('RGB', bands[:3])
+                raise HTTPException(status_code=400, detail="Only single-band rasters are supported for this operation.")
 
-            # Save image to byte array
-            img_byte_array = BytesIO()
-            image.save(img_byte_array, format='PNG')
-            raster_images.append(img_byte_array.getvalue())
-
-            # Extract bounding box from the raster
+            # Ekstrak bounding box dari raster
             bbox = dataset.bounds
             bounds = [[bbox.left, bbox.bottom], [bbox.right, bbox.top]]
 
-            # CRS Transformation (if needed)
-            transformer = Transformer.from_crs("epsg:4326", "epsg:4326", always_xy=True)
+            # Transformasi CRS jika diperlukan
+            transformer = Transformer.from_crs(dataset.crs, "epsg:4326", always_xy=True)
             converted_bounds = [transformer.transform(*coord) for coord in bounds]
             converted_bounds = [
                 [converted_bounds[0][1], converted_bounds[0][0]],
                 [converted_bounds[1][1], converted_bounds[1][0]]
             ]
 
-        # Encode image in base64
-        encoded_image = base64.b64encode(img_byte_array.getvalue()).decode()
+            # Encode image dalam base64
+            if img_byte_array:
+                encoded_image = base64.b64encode(img_byte_array.getvalue()).decode()
+            else:
+                raise HTTPException(status_code=500, detail="Error generating image byte array.")
+            
+            Response = JSONResponse(content={
+                "raster_images": [encoded_image],
+                "bounds": converted_bounds,
+                "area_result": area_result
+            })
+            
+            print(">>>>>" ,Response)
 
-        return JSONResponse(content={"raster_images": [encoded_image], "bounds": converted_bounds})
+            return Response
 
     except HTTPException as e:
         raise e
@@ -862,7 +959,7 @@ async def verify_db_connection():
 
 #     try:
 #         # Path to local raster file
-#         file_path = os.path.abspath(r"data/image_export_mchange_geometrynikel.tiff")
+#         file_path = os.path.abspath(r"Backend/data/image_export_mchange_geometrynikel.tiff")
 #         print("File path:", file_path)
 
 #         if not os.path.isfile(file_path):

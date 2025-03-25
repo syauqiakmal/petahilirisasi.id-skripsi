@@ -8,6 +8,7 @@ import { PopupComponent, getFeatureStyle, onEachFeature } from "../layers/popupc
 import logo from "../Logo/data.png";
 import Legend from "../layers/Legend";
 import ToggleLegend from "../layers/ToggleLegend";
+import Calculate from "../layers/calculate";
 import { createInfoIcon } from "../icons/customIcon";
 
 export const Map = ({hideComponents}) => {
@@ -29,6 +30,8 @@ export const Map = ({hideComponents}) => {
     const [showPopup, setShowPopup] = useState(false);
     const [isLegendOpen, setIsLegendOpen] = useState(false);
     const customIcon = createInfoIcon();
+    const [area, setArea] = useState(null);
+    const [miningData, setMiningData] = useState(null);
 
     const handleLegendToggle = (isOpen) => { setIsLegendOpen(isOpen); }
     const togglePopup = () => setShowPopup((prev) => !prev);
@@ -149,18 +152,20 @@ export const Map = ({hideComponents}) => {
     useEffect(() => {
         const fetchRaster = async () => {
             try{
-                const response = await fetch(`https://petahilirisasi.id/map/raster_morowali2/`);
+                const response = await fetch(`http://localhost:8000/map/raster_morowali2/`);
                 if (!response.ok) {
                     throw new Error("Failed to fetch raster data");
                 }
 
                 const rasterResponse = await response.json();
                 const newUploadedFile = {
-                    name: "Perubahan Wilayah Pertambangan Nikel IWIP Tahun 2000 - 2020",
+                    // name: "Perubahan Wilayah Pertambangan Nikel IWIP Tahun 2000 - 2020",
+                    name: "Nickel Mining Area Changes in Weda, Central Halmahera & East Halmahera, North Maluku 2000 - 2020",
                     data: rasterResponse,
                     checked: true,
                     bounds: rasterResponse.bounds,
-                }
+                    area: rasterResponse.area_result, 
+                };
 
                 setUploadedFiles((prevUploadedFiles) => [
                     ...prevUploadedFiles,
@@ -171,7 +176,10 @@ export const Map = ({hideComponents}) => {
                     ...(prevRasterData || []),
                     ...rasterResponse.raster_images
                 ]);
-
+                setArea(rasterResponse.area_result);
+                console.log(rasterResponse.area_result)
+        
+                
                 setBounds((prevBounds) => prevBounds ? prevBounds.extend(L.latLngBounds(rasterResponse.bounds)) : L.latLngBounds(rasterResponse.bounds));
 
                 const map = mapRef.current;
@@ -180,10 +188,132 @@ export const Map = ({hideComponents}) => {
                 });
 
                 //TODO: Change marker location
-                const markerLatLng = [0.53660, 127.92616]
+                const markerLatLng = [0.472, 127.946]
+                // [0.53660, 127.92616]
                 const mapMarker = L.marker(markerLatLng, {icon: customIcon}).addTo(map);
-                mapMarker.bindPopup("Nikel (Weda, IWIP)")
+                mapMarker.bindPopup(`
+                    <div style="width: 320px; font-size: 12px;">
+                        <h4 style="text-align: center; margin-bottom: 8px;">WIUP - Weda Bay Nickel</h4>
+                        <table border="1" style="border-collapse: collapse; width: 100%; table-layout: fixed;">
+                            <tr>
+                                <th style="width: 40%;">Lokasi Tambang</th>
+                                <td>Halmahera Tengah, Halmahera Timur</td>
+                            </tr>
+                            <tr>
+                                <th>Kabupaten</th>
+                                <td>Halmahera Timur, Halmahera Tengah</td>
+                            </tr>
+                            <tr>
+                                <th>Provinsi</th>
+                                <td>Maluku Utara</td>
+                            </tr>
+                            <tr>
+                                <th>Komoditas</th>
+                                <td>Nikel DMP</td>
+                            </tr>
+                            <tr>
+                                <th>Luas Wilayah (Ha)</th>
+                                <td>45,065.00</td>
+                            </tr>
+                            <tr>
+                                <th>Jenis Izin</th>
+                                <td>KK</td>
+                            </tr>
+                            <tr>
+                                <th>Jenis Badan Usaha</th>
+                                <td>PT</td>
+                            </tr>
+                            <tr>
+                                <th>Nama Perusahaan</th>
+                                <td>Weda Bay Nickel</td>
+                            </tr>
+                            <tr>
+                                <th>Pejabat Berwenang</th>
+                                <td>Menteri</td>
+                            </tr>
+                            <tr>
+                                <th>Nomor SK</th>
+                                <td >
+                                    239.K/30/DJB/2019
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Status C&C</th>
+                                <td>-</td>
+                            </tr>
+                            <tr>
+                                <th>Tahapan Kegiatan</th>
+                                <td>Operasi Produksi</td>
+                            </tr>
+                            <tr>
+                                <th>Pulau</th>
+                                <td>Kepulauan Maluku</td>
+                            </tr>
+                            <tr>
+                                <th>ID Kabupaten</th>
+                                <td>06,02</td>
+                            </tr>
+                            <tr>
+                                <th>ID Provinsi</th>
+                                <td>82</td>
+                            </tr>
+                            <tr>
+                                <th>Kode Jenis Komoditas</th>
+                                <td>12</td>
+                            </tr>
+                            <tr>
+                                <th>Kode Komoditas</th>
+                                <td>Mineral Logam</td>
+                            </tr>
+                            <tr>
+                                <th>Kode Wilayah</th>
+                                <td>05PK0057</td>
+                            </tr>
+                            <tr>
+                                <th>Single ID</th>
+                                <td>1600002122014126</td>
+                            </tr>
+                            <tr>
+                                <th>Tanggal Berlaku SK</th>
+                                <td>30 Desember 2019</td>
+                            </tr>
+                            <tr>
+                                <th>Tanggal Berakhir SK</th>
+                                <td>27 Februari 2048</td>
+                            </tr>
+                            <tr>
+                                <th>Remark</th>
+                                <td>GEN VII</td>
+                            </tr>
+                        </table>
+                    </div>
+                `);
                 
+                setMiningData({
+                    "Lokasi Tambang": "Halmahera Tengah, Halmahera Timur",
+                    "Kabupaten": "Halmahera Timur, Halmahera Tengah",
+                    "Provinsi": "Maluku Utara",
+                    "Komoditas": "Nikel DMP",
+                    "Luas Wilayah (Ha)": "45,065.00",
+                    "Jenis Izin": "KK",
+                    "Jenis Badan Usaha": "PT",
+                    "Nama Perusahaan": "Weda Bay Nickel",
+                    "Pejabat Berwenang": "Menteri",
+                    "Nomor SK": "239.K/30/DJB/2019",
+                    "Status C&C": "-",
+                    "Tahapan Kegiatan": "Operasi Produksi",
+                    "Pulau": "Kepulauan Maluku",
+                    "ID Kabupaten": "06,02",
+                    "ID Provinsi": "82",
+                    "Kode Jenis Komoditas": "12",
+                    "Kode Komoditas": "Mineral Logam",
+                    "Kode Wilayah": "05PK0057",
+                    "Single ID": "1600002122014126",
+                    "Tanggal Berlaku SK": "30 Desember 2019",
+                    "Tanggal Berakhir SK": "27 Februari 2048",
+                    "Remark": "GEN VII",
+                  });
+                  
                 setIsNewUpload(true);
             }catch (error){
                 console.error("error fetching raster: ", error.message);
@@ -289,7 +419,10 @@ export const Map = ({hideComponents}) => {
                 )}
 
                 <ToggleLegend onToggle={handleLegendToggle}/>
-                <Legend isOpen={isLegendOpen} isBits={false}/>
+                <Calculate isOpen={isLegendOpen} area={area} miningData={miningData} />
+
+                
+                {/* <Legend isOpen={isLegendOpen} isBits={false}/> */}
 
                 {selectedOption === "OSM" && (
                     <TileLayer

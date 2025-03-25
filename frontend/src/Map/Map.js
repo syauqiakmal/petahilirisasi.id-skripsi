@@ -11,7 +11,7 @@ import {
 import { GeomanToolbar } from "../layers/Geoman";
 import { ShowCoordinates } from "../layers/ShowCoordinates";
 // import { ContinentsPolygonLayer } from "../layers/ContinentLayer";
-import Search from "../layers/Search";
+// import Search from "../layers/Search";
 // import { continents } from "../data/indo_provinces";
 import Menu from "../layers/Menu";
 
@@ -22,12 +22,14 @@ import {
   onEachFeature,
 } from "../layers/popupcontent"; // Import the PopupComponent
 import logo from "../Logo/data.png";
-import { PopupComponentRaster } from "../layers/legend_raster";
+// import { PopupComponentRaster } from "../layers/legend_raster";
 
 
 //Legend
-import Legend from "../layers/Legend";
+// import Legend from "../layers/Legend";
 import ToggleLegend from "../layers/ToggleLegend";
+
+import Calculate from "../layers/calculate";
 
 import { createInfoIcon } from '../icons/customIcon';
 // import MapPrint from "../layers/MapPrint";
@@ -54,6 +56,8 @@ export const Map = ({ hideComponents }) => {
   const [showLegend, setShowLegend] = useState(false);
   const [isLegendOpen, setIsLegendOpen] = useState(false);
   const customIcon = createInfoIcon();
+  const [area, setArea] = useState(null);
+  const [miningData, setMiningData] = useState(null);
 
   const handleLegendToggle = (isOpen) => {
     setIsLegendOpen(isOpen)
@@ -438,7 +442,7 @@ export const Map = ({ hideComponents }) => {
     const fetchRaster = async () => {
       try {
         const response = await fetch(
-          `https://petahilirisasi.id/map/raster_morowali/`
+          `http://localhost:8000/map/raster_morowali/`
         );
         if (!response.ok) {
           throw new Error("Failed to fetch raster data");
@@ -449,10 +453,12 @@ export const Map = ({ hideComponents }) => {
         
        
         const newUploadedFile = {
-          name: "Perubahan Wilayah Pertambangan Nikel Tahun 2000-2020",
+          // name: "Perubahan Wilayah Pertambangan Nikel Tahun 2000-2020",
+          name: "Nickel Mining Area Changes in Morowali, Central Sulawesi 2000-2020",
           data: rasterResponse, // Base64 images
           checked: true,
           bounds: rasterResponse.bounds, // Bounding box
+          area: rasterResponse.area_result, 
         };
   
         // Update state with new file and raster data
@@ -473,15 +479,138 @@ export const Map = ({ hideComponents }) => {
             : L.latLngBounds(rasterResponse.bounds)
         );
   
+        setArea(rasterResponse.area_result);
+        console.log(rasterResponse.area_result)
+
+        
         const map = mapRef.current
         map.fitBounds(L.latLngBounds(rasterResponse.bounds), {
           maxZoom: 15,
         });
 
         //TODO: Change marker location
-        const markerLatLng = [-2.90943, 122.12265]
+        const markerLatLng = 
+        // [-2.90943, 122.12265]
+        [-2.901, 122.000 ]
         const mapMarker = L.marker(markerLatLng, {icon: customIcon}).addTo(map);
-        mapMarker.bindPopup("Nikel (Bahodopi, IMIP)")
+        mapMarker.bindPopup(`
+          <div style="width: 320px; font-size: 12px;">
+              <h4 style="text-align: center; margin-bottom: 8px;">WIUP - Bintangdelapan Mineral</h4>
+              <table border="1" style="border-collapse: collapse; width: 100%; table-layout: fixed;">
+                  <tr>
+                      <th style="width: 40%;">Lokasi Tambang</th>
+                      <td>Desa Bahomoahi, Bahomotefe, Lalampu, Lele, Dampala, Siumbatu, Bahodopi, Keurea, Fatufia (Kec. Bungku Tengah & Bahodopi)</td>
+                  </tr>
+                  <tr>
+                      <th>Kabupaten</th>
+                      <td>Kab. Morowali</td>
+                  </tr>
+                  <tr>
+                      <th>Provinsi</th>
+                      <td>Sulawesi Tengah</td>
+                  </tr>
+                  <tr>
+                      <th>Komoditas</th>
+                      <td>Nikel</td>
+                  </tr>
+                  <tr>
+                      <th>Luas Wilayah (Ha)</th>
+                      <td>20,765.00</td>
+                  </tr>
+                  <tr>
+                      <th>Jenis Izin</th>
+                      <td>IUP</td>
+                  </tr>
+                  <tr>
+                      <th>Jenis Badan Usaha</th>
+                      <td>PT</td>
+                  </tr>
+                  <tr>
+                      <th>Nama Perusahaan</th>
+                      <td>Bintangdelapan Mineral</td>
+                  </tr>
+                  <tr>
+                      <th>Pejabat Berwenang</th>
+                      <td>Menteri</td>
+                  </tr>
+                  <tr>
+                      <th>Nomor SK</th>
+                      <td >
+                          1144/1/IUP/PMDN/2022
+                      </td>
+                  </tr>
+                  <tr>
+                      <th>Status C&C</th>
+                      <td>CNC-1</td>
+                  </tr>
+                  <tr>
+                      <th>Tahapan Kegiatan</th>
+                      <td>Operasi Produksi</td>
+                  </tr>
+                  <tr>
+                      <th>Pulau</th>
+                      <td>Sulawesi</td>
+                  </tr>
+                  <tr>
+                      <th>ID Kabupaten</th>
+                      <td>06</td>
+                  </tr>
+                  <tr>
+                      <th>ID Provinsi</th>
+                      <td>72</td>
+                  </tr>
+                  <tr>
+                      <th>Kode Jenis Komoditas</th>
+                      <td>12</td>
+                  </tr>
+                  <tr>
+                      <th>Kode Komoditas</th>
+                      <td>Mineral Logam</td>
+                  </tr>
+                  <tr>
+                      <th>Single ID</th>
+                      <td>3472062122014009</td>
+                  </tr>
+                  <tr>
+                      <th>Tanggal Berlaku SK</th>
+                      <td>30 Desember 2022</td>
+                  </tr>
+                  <tr>
+                      <th>Tanggal Berakhir SK</th>
+                      <td>20 Juli 2027</td>
+                  </tr>
+                  <tr>
+                      <th>Remark</th>
+                      <td>-</td>
+                  </tr>
+              </table>
+          </div>
+      `);
+
+      setMiningData({
+        "Lokasi Tambang": "Desa Bahomoahi, Bahomotefe, Lalampu, Lele, Dampala, Siumbatu, Bahodopi, Keurea, Fatufia (Kec. Bungku Tengah & Bahodopi)",
+        "Kabupaten": "Kab. Morowali",
+        "Provinsi": "Sulawesi Tengah",
+        "Komoditas": "Nikel",
+        "Luas Wilayah (Ha)": "20,765.00",
+        "Jenis Izin": "IUP",
+        "Jenis Badan Usaha": "PT",
+        "Nama Perusahaan": "Bintangdelapan Mineral",
+        "Pejabat Berwenang": "Menteri",
+        "Nomor SK": "1144/1/IUP/PMDN/2022",
+        "Status C&C": "CNC-1",
+        "Tahapan Kegiatan": "Operasi Produksi",
+        "Pulau": "Sulawesi",
+        "ID Kabupaten": "06",
+        "ID Provinsi": "72",
+        "Kode Jenis Komoditas": "12",
+        "Kode Komoditas": "Mineral Logam",
+        "Single ID": "3472062122014009",
+        "Tanggal Berlaku SK": "30 Desember 2022",
+        "Tanggal Berakhir SK": "20 Juli 2027",
+        "Remark": "-",
+      });
+      
 
         setIsNewUpload(true);
       } catch (error) {
@@ -497,7 +626,7 @@ export const Map = ({ hideComponents }) => {
   //   const fetchRaster = async () => {
   //     try {
   //       const response = await fetch(
-  //         `https://petahilirisasi.id/map/rasterNikelA/`
+  //         `http://localhost:8000/map/rasterNikelA/`
   //       );
   //       if (!response.ok) {
   //         throw new Error("Failed to fetch raster data");
@@ -548,7 +677,7 @@ export const Map = ({ hideComponents }) => {
   //   const fetchRaster = async () => {
   //     try {
   //       const response = await fetch(
-  //         `https://petahilirisasi.id/map/rasterNikelB/`
+  //         `http://localhost:8000/map/rasterNikelB/`
   //       );
   //       if (!response.ok) {
   //         throw new Error("Failed to fetch raster data");
@@ -599,7 +728,7 @@ export const Map = ({ hideComponents }) => {
   //   const fetchRaster = async () => {
   //     try {
   //       const response = await fetch(
-  //         `https://petahilirisasi.id/map/rasterNikelC/`
+  //         `http://localhost:8000/map/rasterNikelC/`
   //       );
   //       if (!response.ok) {
   //         throw new Error("Failed to fetch raster data");
@@ -651,7 +780,7 @@ export const Map = ({ hideComponents }) => {
   //   const fetchRaster = async () => {
   //     try {
   //       const response = await fetch(
-  //         `https://petahilirisasi.id/map/rasterNikelD/`
+  //         `http://localhost:8000/map/rasterNikelD/`
   //       );
   //       if (!response.ok) {
   //         throw new Error("Failed to fetch raster data");
@@ -703,7 +832,7 @@ export const Map = ({ hideComponents }) => {
   //   const fetchRaster = async () => {
   //     try {
   //       const response = await fetch(
-  //         `https://petahilirisasi.id/map/rasterNikelE/`
+  //         `http://localhost:8000/map/rasterNikelE/`
   //       );
   //       if (!response.ok) {
   //         throw new Error("Failed to fetch raster data");
@@ -876,7 +1005,9 @@ export const Map = ({ hideComponents }) => {
 
         
         <ToggleLegend onToggle={handleLegendToggle}/>
-        <Legend isOpen={isLegendOpen} isBits={false}/>
+        
+
+        <Calculate isOpen={isLegendOpen} area={area} miningData={miningData} />
 
         {selectedOption === "OSM" && (
           <TileLayer
