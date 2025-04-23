@@ -32,7 +32,7 @@ import ToggleLegend from "../layers/ToggleLegend";
 import { createInfoIcon } from '../icons/customIcon';
 import Calculate from "../layers/calculate";
 
-export const Mapi = ({ hideComponents }) => {
+export const Map = ({ hideComponents }) => {
   const [selectedOption, setSelectedOption] = useState("OSM");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isContinentsVisible, setIsContinentsVisible] = useState(false);
@@ -58,12 +58,10 @@ export const Mapi = ({ hideComponents }) => {
   const [area, setArea] = useState(null);
   const [miningData, setMiningData] = useState(null);
 
-
   const handleLegendToggle = (isOpen) => {
     setIsLegendOpen(isOpen)
   }
-
-
+  
   const togglePopup = () => setShowPopup((prev) => !prev);
   
   const toggleLegend = () => setShowLegend((prev) => !prev);
@@ -123,10 +121,12 @@ export const Mapi = ({ hideComponents }) => {
     const selectedRasterFiles = updatedFiles.filter(
       (file) =>
         file.checked &&
-        (file.name.endsWith(".tif") || file.name.endsWith(".tiff") || file.name.endsWith("2000-2020") || file.name.endsWith("2005") ||
+        (file.name.endsWith(".tif") || file.name.endsWith(".tiff")|| file.name.endsWith("2000-2020")|| file.name.endsWith("2000")||
+        file.name.endsWith("2005") ||
         file.name.endsWith("2010")||
         file.name.endsWith("2015")||
-        file.name.endsWith("2020"))
+        file.name.endsWith("2020")
+      )
     );
 
     // Combine all raster data for rendering on map
@@ -352,7 +352,7 @@ export const Mapi = ({ hideComponents }) => {
     const fetchRaster = async () => {
       try {
         const response = await fetch(
-          `http://localhost:8000/map/raster3/`
+          `http://localhost:8000/map/raster2/`
         );
         if (!response.ok) {
           throw new Error("Failed to fetch raster data");
@@ -363,13 +363,14 @@ export const Mapi = ({ hideComponents }) => {
         
        
         const newUploadedFile = {
-          // name: "Perubahan Wilayah Pertambangan Bauksit Tahun 2000-2020",
-          name: "Bauxite Mining Area Changes in Ketapang, West Kalimantan 2000-2020",
+          name: "Quartz Sand Mining Area Changes in Sarolangun, Jambi 2000-2020",
+          // name: "Perubahan Wilayah Pertambangan Pasir Kuarsa Tahun 2000-2020",
           data: rasterResponse, // Base64 images
           checked: true,
           bounds: rasterResponse.bounds, // Bounding box
           area: rasterResponse.area_result, 
         };
+  
   
         // Update state with new file and raster data
         setUploadedFiles((prevUploadedFiles) => [
@@ -388,42 +389,40 @@ export const Mapi = ({ hideComponents }) => {
             ? prevBounds.extend(L.latLngBounds(rasterResponse.bounds))
             : L.latLngBounds(rasterResponse.bounds)
         );
-  
         setArea(rasterResponse.area_result);
         console.log(rasterResponse.area_result)
 
-
         const map = mapRef.current
         map.fitBounds(L.latLngBounds(rasterResponse.bounds), {
-          maxZoom: 15,
+          maxZoom: 16,
         });
 
         //TODO: change text
-        const markerLatLng = [-0.03, 110.1975]
+        const markerLatLng = [-2.332, 102.571]
         const mapMarker = L.marker(markerLatLng, {icon: customIcon}).addTo(map);
         mapMarker.bindPopup(`
-          <div style="width: 300px; font-size: 12px;">
-              <h4 style="text-align: center; margin-bottom: 8px;">WIUP - Bauksit Marau Ketapang</h4>
+          <div style="width: 320px; font-size: 12px;">
+              <h4 style="text-align: center; margin-bottom: 8px;">WIUP - Bumi Kuarsa Abadi</h4>
               <table border="1" style="border-collapse: collapse; width: 100%; table-layout: fixed;">
                   <tr>
                       <th style="width: 40%;">Lokasi Tambang</th>
-                      <td>Marau, Ketapang</td>
+                      <td>Kec. Bathin VIII</td>
                   </tr>
                   <tr>
                       <th>Kabupaten</th>
-                      <td>Ketapang</td>
+                      <td>Sarolangun</td>
                   </tr>
                   <tr>
                       <th>Provinsi</th>
-                      <td>Kalimantan Barat</td>
+                      <td>Jambi</td>
                   </tr>
                   <tr>
                       <th>Komoditas</th>
-                      <td>Bauksit</td>
+                      <td>Batu Kuarsa</td>
                   </tr>
                   <tr>
                       <th>Luas Wilayah (Ha)</th>
-                      <td>15,670.00</td>
+                      <td>3,200.00</td>
                   </tr>
                   <tr>
                       <th>Jenis Izin</th>
@@ -435,7 +434,7 @@ export const Mapi = ({ hideComponents }) => {
                   </tr>
                   <tr>
                       <th>Nama Perusahaan</th>
-                      <td>CITA MINERAL INVESTINDO TBK</td>
+                      <td>Bumi Kuarsa Abadi</td>
                   </tr>
                   <tr>
                       <th>Pejabat Berwenang</th>
@@ -443,11 +442,13 @@ export const Mapi = ({ hideComponents }) => {
                   </tr>
                   <tr>
                       <th>Nomor SK</th>
-                      <td title="503/109/MINERBA/DPMPTSP.C/2017" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">503/109/MINERBA/DPMPTSP.C/2017</td>
+                      <td title="0707210/206/KEP.KA.DPM-PTSP-6/IUP-OP/XI/2020" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis; ">
+                          0707210/206/...
+                      </td>
                   </tr>
                   <tr>
                       <th>Status C&C</th>
-                      <td>CNC-3</td>
+                      <td>CNC</td>
                   </tr>
                   <tr>
                       <th>Tahapan Kegiatan</th>
@@ -455,65 +456,68 @@ export const Mapi = ({ hideComponents }) => {
                   </tr>
                   <tr>
                       <th>Pulau</th>
-                      <td>Kalimantan</td>
+                      <td>Sumatera</td>
                   </tr>
                   <tr>
                       <th>ID Kabupaten</th>
-                      <td>04</td>
+                      <td>03</td>
                   </tr>
                   <tr>
                       <th>ID Provinsi</th>
-                      <td>61</td>
+                      <td>15</td>
                   </tr>
                   <tr>
                       <th>Kode Jenis Komoditas</th>
-                      <td>17</td>
+                      <td>36</td>
                   </tr>
                   <tr>
                       <th>Kode Komoditas</th>
-                      <td>Mineral Logam</td>
+                      <td>Mineral Bukan Logam</td>
                   </tr>
                   <tr>
                       <th>Single ID</th>
-                      <td>3361042172014100</td>
+                      <td>2115034362020001</td>
                   </tr>
                   <tr>
                       <th>Tanggal Berlaku SK</th>
-                      <td>3 Agustus 2017</td>
+                      <td>2 November 2020</td>
                   </tr>
                   <tr>
                       <th>Tanggal Berakhir SK</th>
-                      <td>24 Mei 2029</td>
+                      <td>2 November 2030</td>
+                  </tr>
+                  <tr>
+                      <th>Remark</th>
+                      <td>-</td>
                   </tr>
               </table>
           </div>
       `);
       
       setMiningData({
-        "Lokasi Tambang": "Marau, Ketapang",
-        "Kabupaten": "Ketapang",
-        "Provinsi": "Kalimantan Barat",
-        "Komoditas": "Bauksit",
-        "Luas Wilayah (Ha)": "15,670.00",
+        "Lokasi Tambang": "Kec. Bathin VIII",
+        "Kabupaten": "Sarolangun",
+        "Provinsi": "Jambi",
+        "Komoditas": "Batu Kuarsa",
+        "Luas Wilayah (Ha)": "3,200.00",
         "Jenis Izin": "IUP",
         "Jenis Badan Usaha": "PT",
-        "Nama Perusahaan": "CITA MINERAL INVESTINDO TBK",
+        "Nama Perusahaan": "Bumi Kuarsa Abadi",
         "Pejabat Berwenang": "Gubernur",
-        "Nomor SK": "503/109/MINERBA/DPMPTSP.C/2017",
-        "Status C&C": "CNC-3",
+        "Nomor SK": "0707210/206/KEP.KA.DPM-PTSP-6/IUP-OP/XI/2020",
+        "Status C&C": "CNC",
         "Tahapan Kegiatan": "Operasi Produksi",
-        "Pulau": "Kalimantan",
-        "ID Kabupaten": "04",
-        "ID Provinsi": "61",
-        "Kode Jenis Komoditas": "17",
-        "Kode Komoditas": "Mineral Logam",
-        "Single ID": "3361042172014100",
-        "Tanggal Berlaku SK": "3 Agustus 2017",
-        "Tanggal Berakhir SK": "24 Mei 2029",
+        "Pulau": "Sumatera",
+        "ID Kabupaten": "03",
+        "ID Provinsi": "15",
+        "Kode Jenis Komoditas": "36",
+        "Kode Komoditas": "Mineral Bukan Logam",
+        "Single ID": "2115034362020001",
+        "Tanggal Berlaku SK": "2 November 2020",
+        "Tanggal Berakhir SK": "2 November 2030",
+        "Remark": "-",
       });
       
-      
-  
         setIsNewUpload(true);
       } catch (error) {
         console.error("Error fetching raster:", error.message);
@@ -524,11 +528,14 @@ export const Mapi = ({ hideComponents }) => {
     fetchRaster();
   }, []);
   
+ 
+
+
   // useEffect(() => {
   //   const fetchRaster = async () => {
   //     try {
   //       const response = await fetch(
-  //         `http://localhost:8000/map/rasterbauksitA/`
+  //         `http://localhost:8000/map/rasterkuarsaA/`
   //       );
   //       if (!response.ok) {
   //         throw new Error("Failed to fetch raster data");
@@ -539,7 +546,7 @@ export const Mapi = ({ hideComponents }) => {
         
        
   //       const newUploadedFile = {
-  //         name: "Perubahan Wilayah Pertambangan Bauksit Tahun 2000",
+  //         name: "Perubahan Wilayah Pertambangan Kuarsa Tahun 2000",
   //         data: rasterResponse, // Base64 images
   //         checked: false,
   //         bounds: rasterResponse.bounds, // Bounding box
@@ -581,7 +588,7 @@ export const Mapi = ({ hideComponents }) => {
   //   const fetchRaster = async () => {
   //     try {
   //       const response = await fetch(
-  //         `http://localhost:8000/map/rasterbauksitB/`
+  //         `http://localhost:8000/map/rasterkuarsaB/`
   //       );
   //       if (!response.ok) {
   //         throw new Error("Failed to fetch raster data");
@@ -592,61 +599,7 @@ export const Mapi = ({ hideComponents }) => {
         
        
   //       const newUploadedFile = {
-  //         name: "Perubahan Wilayah Pertambangan Bauksit Tahun 2005",
-  //         data: rasterResponse, // Base64 images
-  //         checked: false,
-  //         bounds: rasterResponse.bounds, // Bounding box
-  //       };
-  
-  //       // Update state with new file and raster data
-  //       setUploadedFiles((prevUploadedFiles) => [
-  //         ...prevUploadedFiles,
-  //         newUploadedFile,
-  //       ]);
-  
-  //       // Update rasterData state by appending new raster images
-  //       setRasterData((prevRasterData) => [
-  //         ...(prevRasterData || []),
-  //         ...rasterResponse.raster_images,
-  //       ]);
-  
-  //       setBounds((prevBounds) =>
-  //         prevBounds
-  //           ? prevBounds.extend(L.latLngBounds(rasterResponse.bounds))
-  //           : L.latLngBounds(rasterResponse.bounds)
-  //       );
-  
-  //       const map = mapRef.current
-  //       map.fitBounds(L.latLngBounds(rasterResponse.bounds), {
-  //         maxZoom: 15,
-  //       });
-  //       setIsNewUpload(false);
-  //     } catch (error) {
-  //       console.error("Error fetching raster:", error.message);
-  //       // Optionally show error to the user here, e.g., via a toast notification
-  //     }
-  //   };
-  
-  //   fetchRaster();
-  // }, []);
-
-
-  // useEffect(() => {
-  //   const fetchRaster = async () => {
-  //     try {
-  //       const response = await fetch(
-  //         `http://localhost:8000/map/rasterbauksitC/`
-  //       );
-  //       if (!response.ok) {
-  //         throw new Error("Failed to fetch raster data");
-  //       }
-  
-  //       const rasterResponse = await response.json();
-  //       console.log("Raster Response:", rasterResponse);
-        
-       
-  //       const newUploadedFile = {
-  //         name: "Perubahan Wilayah Pertambangan Bauksit Tahun 2010",
+  //         name: "Perubahan Wilayah Pertambangan Kuarsa Tahun 2005",
   //         data: rasterResponse, // Base64 images
   //         checked: false,
   //         bounds: rasterResponse.bounds, // Bounding box
@@ -689,7 +642,7 @@ export const Mapi = ({ hideComponents }) => {
   //   const fetchRaster = async () => {
   //     try {
   //       const response = await fetch(
-  //         `http://localhost:8000/map/rasterbauksitD/`
+  //         `http://localhost:8000/map/rasterkuarsaC/`
   //       );
   //       if (!response.ok) {
   //         throw new Error("Failed to fetch raster data");
@@ -700,7 +653,7 @@ export const Mapi = ({ hideComponents }) => {
         
        
   //       const newUploadedFile = {
-  //         name: "Perubahan Wilayah Pertambangan Bauksit Tahun 2015",
+  //         name: "Perubahan Wilayah Pertambangan Kuarsa Tahun 2010",
   //         data: rasterResponse, // Base64 images
   //         checked: false,
   //         bounds: rasterResponse.bounds, // Bounding box
@@ -743,7 +696,7 @@ export const Mapi = ({ hideComponents }) => {
   //   const fetchRaster = async () => {
   //     try {
   //       const response = await fetch(
-  //         `http://localhost:8000/map/rasterbauksitE/`
+  //         `http://localhost:8000/map/rasterkuarsaD/`
   //       );
   //       if (!response.ok) {
   //         throw new Error("Failed to fetch raster data");
@@ -754,7 +707,7 @@ export const Mapi = ({ hideComponents }) => {
         
        
   //       const newUploadedFile = {
-  //         name: "Perubahan Wilayah Pertambangan Bauksit Tahun 2020",
+  //         name: "Perubahan Wilayah Pertambangan Kuarsa Tahun 2015",
   //         data: rasterResponse, // Base64 images
   //         checked: false,
   //         bounds: rasterResponse.bounds, // Bounding box
@@ -854,7 +807,7 @@ export const Mapi = ({ hideComponents }) => {
     }
   }, [geojsonData, rasterData, bounds, isNewUpload, uploadedFiles]);
 
-  const position = [-0.04428, 110.18154];
+  const position = [-2.35693, 102.60818];
 
   return (
     <div className="container" id="map-container">
@@ -959,20 +912,22 @@ export const Mapi = ({ hideComponents }) => {
         <ShowCoordinates />
 
         <ToggleLegend onToggle={handleLegendToggle}/>
-        <Calculate isOpen={isLegendOpen} area={area} miningData={miningData}/>
+        <Calculate isOpen={isLegendOpen} area={area} miningData={miningData} />
+
+
         {/* <Legend isOpen={isLegendOpen} isBits={false}/> */}
 
         {uploadedFiles.map((file, index) => {
           if (
             file.checked && // Only show checked files
             !file.name.endsWith(".tif") &&
-            !file.name.endsWith(".tiff") &&
-            !file.name.endsWith("2000-2020") && 
+            !file.name.endsWith(".tiff") && 
+            !file.name.endsWith("2000-2020") &&
             !file.name.endsWith("2000")&&     
-            !file.name.endsWith("2005") &&
-            !file.name.endsWith("2010")&&
-            !file.name.endsWith("2015")&&
-            !file.name.endsWith("2020")&&
+          !file.name.endsWith("2005") &&
+          !file.name.endsWith("2010")&&
+          !file.name.endsWith("2015")&&
+          !file.name.endsWith("2020")&&
             file.data
           ) {
             return (

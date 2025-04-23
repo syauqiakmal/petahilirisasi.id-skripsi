@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronUp, faChevronDown, faThList, faChevronLeft, faChevronRight, faChevronCircleRight } from "@fortawesome/free-solid-svg-icons";
+import {faThList, faChevronRight, faChevronCircleRight } from "@fortawesome/free-solid-svg-icons";
 import { useMediaQuery } from "react-responsive";
 
 const ToggleLegend = ({ onToggle }) => {
