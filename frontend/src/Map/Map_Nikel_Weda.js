@@ -192,7 +192,7 @@ export const Map = ({hideComponents}) => {
                 // [0.53660, 127.92616]
                 const mapMarker = L.marker(markerLatLng, {icon: customIcon}).addTo(map);
                 mapMarker.bindPopup(`
-                    <div style="width: 320px; font-size: 12px;">
+                    <div style="width: 320px; height: 400px; font-size: 12px; overflow-y: auto;">
                         <h4 style="text-align: center; margin-bottom: 8px;">WIUP - Weda Bay Nickel</h4>
                         <table border="1" style="border-collapse: collapse; width: 100%; table-layout: fixed;">
                             <tr>

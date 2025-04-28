@@ -394,7 +394,7 @@ export const Map = ({ hideComponents }) => {
         const markerLatLng = [-0.03, 110.1975]
         const mapMarker = L.marker(markerLatLng, {icon: customIcon}).addTo(map);
         mapMarker.bindPopup(`
-          <div style="width: 300px; font-size: 12px;">
+          <div style="width: 320px; height: 400px; font-size: 12px; overflow-y: auto;">
               <h4 style="text-align: center; margin-bottom: 8px;">WIUP - Bauksit Marau Ketapang</h4>
               <table border="1" style="border-collapse: collapse; width: 100%; table-layout: fixed;">
                   <tr>
