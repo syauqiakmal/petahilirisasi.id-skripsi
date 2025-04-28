@@ -163,12 +163,36 @@ const Calculate = ({ isOpen, area, miningData }) => {
   const isTablet = useMediaQuery({ minWidth: 769, maxWidth: 1190 });
 
   const legendData = [
-    { name: "Vegetation Cover", color: "#4CAF50", area: (area?.["Tutupan Vegetasi"] || 0) / 10000 },
-    { name: "Water Bodies", color: "#1E88E5", area: (area?.["Tubuh Air"] || 0) / 10000 },
-    { name: "Short Vegetation after Tree Cover Loss", color: "#E53935", area: (area?.["Lahan Terbuka"] || 0) / 10000 },
-    { name: "Cropland Gain within Wetlands", color: "#FB8C00", area: (area?.["Lahan Kebun"] || 0) / 10000 },
-    { name: "Built-Up Area", color: "#26C6DA", area: (area?.["Daerah Terbangun"] || 0) / 10000 },
-    { name: "Short Vegetation Gain From Cropland Loss", color: "#388E3C", area: (area?.["Lahan Restorasi"] || 0) / 10000 },
+    { 
+      name: "Vegetation Cover", 
+      color: "#4CAF50", 
+      area: Math.round((area?.["Tutupan Vegetasi"] || 0) / 10000)
+    },
+    { 
+      name: "Water Bodies", 
+      color: "#1E88E5", 
+      area: Math.round((area?.["Tubuh Air"] || 0) / 10000)
+    },
+    { 
+      name: "Short Vegetation after Tree Cover Loss", 
+      color: "#E53935", 
+      area: Math.round((area?.["Lahan Terbuka"] || 0) / 10000)
+    },
+    { 
+      name: "Cropland Gain within Wetlands", 
+      color: "#FB8C00", 
+      area: Math.round((area?.["Lahan Kebun"] || 0) / 10000)
+    },
+    { 
+      name: "Built-Up Area", 
+      color: "#26C6DA", 
+      area: Math.round((area?.["Daerah Terbangun"] || 0) / 10000)
+    },
+    { 
+      name: "Short Vegetation Gain From Cropland Loss", 
+      color: "#388E3C", 
+      area: Math.round((area?.["Lahan Restorasi"] || 0) / 10000)
+    },
   ];
 
   const generatePDF = () => {
@@ -231,12 +255,12 @@ const Calculate = ({ isOpen, area, miningData }) => {
 
 
 
-      <h4 style={{ textAlign: "center", margin: "10px 0" }}>Area Size (ha)</h4>
+      <h4 style={{ textAlign: "center", margin: "10px 0" }}>Area Size (ha<sup>2</sup>)</h4>
       <table style={{ width: "100%", borderCollapse: "collapse", borderRadius: "8px", overflow: "hidden", backgroundColor: "rgba(255, 255, 255, 0.15)", backdropFilter: "blur(1px)" }}>
         <thead>
           <tr style={{ background: "#08709d", color: "white", textAlign: "left" }}>
             <th style={{ padding: "10px", backgroundColor: "rgba(255, 255, 255, 0.15)", }}>Category</th>
-            <th style={{ padding: "10px", backgroundColor: "rgba(255, 255, 255, 0.15)", }}>Area</th>
+            <th style={{ padding: "10px", backgroundColor: "rgba(255, 255, 255, 0.15)", }}>Area (ha<sup>2</sup>)</th>
           </tr>
         </thead>
         <tbody>
