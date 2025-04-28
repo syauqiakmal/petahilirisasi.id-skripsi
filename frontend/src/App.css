@@ -663,13 +663,13 @@ input[type=file]::file-selector-button:hover {
 
 
 
-.testing{
+.map_setting{
   display: block;
   padding: 10px;
   cursor: pointer;
 }
 
-.testing:hover{
+.map_setting:hover{
   background-color: #7bc0e17d;
   border-radius: 5px;
   margin-right: 9px

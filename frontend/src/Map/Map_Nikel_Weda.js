@@ -323,6 +323,8 @@ export const Map = ({hideComponents}) => {
         fetchRaster();
     }, []);
 
+    
+
     function convertBounds(bounds) {
         if (bounds && bounds._southWest && bounds._northEast) {
             return [

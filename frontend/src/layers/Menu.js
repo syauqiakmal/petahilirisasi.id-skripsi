@@ -6,25 +6,13 @@ const Menu = ({
   handleOptionChange,
   isMenuOpen,
   handleMenuToggle,
-  isContinentsVisible,
-  handleToggleContinents,
   uploadedFiles,
   handleShowFile,
-  handleFileUpload,
-  isContinentsCheckboxEnabled,
-  isUploadCheckboxEnabled,
   handleColumnSelection,
   handleRasterFile,
 }) => {
-  const [dropdownStates, setDropdownStates] = useState({});
   const menuRef = useRef(null);
 
-  const toggleDropdown = (index) => {
-    setDropdownStates((prevStates) => ({
-      ...prevStates,
-      [index]: !prevStates[index],
-    }));
-  };
 
   useEffect(() => {
     const handleDoubleClick = (event) => {
@@ -68,7 +56,7 @@ const Menu = ({
       <div className={`dashboard-links ${isMenuOpen ? "open" : ""}`}>
         <ul>
           <li>
-            <div className="testing">
+            <div className="map_setting">
               <label
                 className="nameMenu"
                 style={{ display: "flex", alignItems: "center" }}
@@ -85,7 +73,7 @@ const Menu = ({
             </div>
           </li>
           <li>
-            <div className="testing">
+            <div className="map_setting">
               <label
                 className="nameMenu"
                 style={{ display: "flex", alignItems: "center" }}
@@ -102,7 +90,7 @@ const Menu = ({
             </div>
           </li>
           <li>
-            <div className="testing">
+            <div className="map_setting">
               <label
                 className="nameMenu"
                 style={{ display: "flex", alignItems: "center" }}
@@ -145,144 +133,102 @@ const Menu = ({
           <br></br>
           {uploadedFiles.map((file, index) => (
             <li key={index}>
-              <div className="testing">
-                <details
-                  className="checkbox-wrapper-21"
-                  open={dropdownStates[index]}
-                >
-                  {/* Check if file is a TIFF or ZIP */}
-                  {file.name.endsWith(".tif") || file.name.endsWith(".tiff") || file.name.endsWith("2000-2020")|| file.name.endsWith("2000")|| file.name.endsWith("2005")|| file.name.endsWith("2010")|| file.name.endsWith("2015")|| file.name.endsWith("2020")? (
-                    <summary
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        cursor: "pointer",
-                      }}
-                      onClick={() => toggleDropdown(index)}
-                    >
+              <div className="show_raste_image">
+                {/* Check if file is a TIFF, ZIP, or has specific names */}
+                {(file.name.endsWith(".tif") ||
+                  file.name.endsWith(".tiff") ||
+                  file.name.endsWith("2000-2020") ||
+                  file.name.endsWith("2000") ||
+                  file.name.endsWith("2005") ||
+                  file.name.endsWith("2010") ||
+                  file.name.endsWith("2015") ||
+                  file.name.endsWith("2020")) ? (
+                 <div style={{ display: "flex", alignItems: "center", cursor: "pointer" }}>
+                    <label className="control control--checkbox" style={{ display: "flex", alignItems: "center" }}>
+                      <input
+                        id={`toggle-${index}`}
+                        type="checkbox"
+                        checked={file.checked}
+                        onChange={(e) => {
+                          handleRasterFile(index, e.target.checked);
+                          e.stopPropagation(); // Stop propagation if needed
+                        }}
+                        style={{ marginRight: "10px" }} // Add space between checkbox and text
+                      />
+                      <div className="upload_file_name">{file.name}</div>
+                      <div className="control__indicator"></div>
+                    </label>
+                  </div>
+                ) : (
+                  // Render ZIP file with additional info
+                  <>
+                    <div style={{ display: "flex", alignItems: "center", cursor: "pointer" }}>
                       <label className="control control--checkbox">
                         <input
                           id={`toggle-${index}`}
                           type="checkbox"
                           checked={file.checked}
-                          onChange={(e) => {
-                            handleRasterFile(index, e.target.checked);
-                            e.stopPropagation(); // Stop propagation if needed
-                          }}
-                          onClick={(e) => e.stopPropagation()} // Ensure click event is stopped
+                          onChange={(e) => handleShowFile(index, e.target.checked)}
                         />
                         <div className="upload_file_name">{file.name}</div>
                         <div className="control__indicator"></div>
                       </label>
-                    </summary>
-                  ) : (
-                    /* Render ZIP file with summary and additional info */
-                    <>
-                      <summary
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          cursor: "pointer",
-                        }}
-                        onClick={() => toggleDropdown(index)}
-                      >
-                        <label className="control control--checkbox">
-                          <input
-                            id={`toggle-${index}`}
-                            type="checkbox"
-                            checked={file.checked}
-                            onChange={(e) =>
-                              handleShowFile(index, e.target.checked)
-                            }
-                            onClick={(e) => e.stopPropagation()}
-                          />
-                          <div className="upload_file_name">{file.name}</div>
-                          <div className="control__indicator"></div>
-                        </label>
-                      </summary>
+                    </div>
 
-                      {file.checked && (
-                        <div className="additional-info">
-                          <ul className="ulshp">
-                            {file.name.endsWith(
-                              "2000-2020"
-                            ) &&
-                            file.selectedColumns &&
-                            file.selectedColumns.length > 0 ? (
-                              <ul>
-                                {file.selectedColumns.map((column) => (
-                                  <li className="lishp" key={column}>
-                                    <label className="labelshp">
-                                      <input
-                                        type="checkbox"
-                                        checked={file.selectedColumns.includes(
-                                          column
-                                        )}
-                                        onChange={(e) =>
-                                          handleColumnSelection(
-                                            index,
-                                            column,
-                                            e.target.checked
-                                          )
-                                        }
-                                      />
-                                      <span style={{ marginLeft: "10px" }}>
-                                        {column}
-                                      </span>
-                                    </label>
-                                  </li>
-                                ))}
-                              </ul>
-                            ) : file.data.features &&
-                              file.data.features.length > 0 ? (
-                              // For shapefile/GeoJSON
-                              Object.keys(file.data.features[0].properties)
-                                .filter((column) => {
-                                  return file.data.features.every(
-                                    (feature) =>
-                                      column !== "geom" &&
-                                      column !== "id" &&
-                                      feature.properties[column] !== "" &&
-                                      feature.properties[column] !== "0" &&
-                                      feature.properties[column] !== null
-                                  );
-                                })
-                                .map((column) => (
-                                  <li className="lishp" key={column}>
-                                    <label className="labelshp">
-                                      <input
-                                        type="checkbox"
-                                        checked={file.selectedColumns.includes(
-                                          column
-                                        )}
-                                        onChange={(e) =>
-                                          handleColumnSelection(
-                                            index,
-                                            column,
-                                            e.target.checked
-                                          )
-                                        }
-                                      />
-                                      <span style={{ marginLeft: "10px" }}>
-                                        {column}
-                                      </span>
-                                    </label>
-                                  </li>
-                                ))
-                            ) : (
-                              // Fallback if no valid data
-                              <li>
-                                <span>
-                                  Tidak ada data yang dapat ditampilkan.
-                                </span>
-                              </li>
-                            )}
-                          </ul>
-                        </div>
-                      )}
-                    </>
-                  )}
-                </details>
+                    {file.checked && (
+                      <div className="additional-info">
+                        <ul className="ulshp">
+                          {file.name.endsWith("2000-2020") && file.selectedColumns && file.selectedColumns.length > 0 ? (
+                            <ul>
+                              {file.selectedColumns.map((column) => (
+                                <li className="lishp" key={column}>
+                                  <label className="labelshp">
+                                    <input
+                                      type="checkbox"
+                                      checked={file.selectedColumns.includes(column)}
+                                      onChange={(e) => handleColumnSelection(index, column, e.target.checked)}
+                                    />
+                                    <span style={{ marginLeft: "10px" }}>{column}</span>
+                                  </label>
+                                </li>
+                              ))}
+                            </ul>
+                          ) : file.data.features && file.data.features.length > 0 ? (
+                            // For shapefile/GeoJSON
+                            Object.keys(file.data.features[0].properties)
+                              .filter((column) => {
+                                return file.data.features.every(
+                                  (feature) =>
+                                    column !== "geom" &&
+                                    column !== "id" &&
+                                    feature.properties[column] !== "" &&
+                                    feature.properties[column] !== "0" &&
+                                    feature.properties[column] !== null
+                                );
+                              })
+                              .map((column) => (
+                                <li className="lishp" key={column}>
+                                  <label className="labelshp">
+                                    <input
+                                      type="checkbox"
+                                      checked={file.selectedColumns.includes(column)}
+                                      onChange={(e) => handleColumnSelection(index, column, e.target.checked)}
+                                    />
+                                    <span style={{ marginLeft: "10px" }}>{column}</span>
+                                  </label>
+                                </li>
+                              ))
+                          ) : (
+                            // Fallback if no valid data
+                            <li>
+                              <span> Tidak ada data yang dapat ditampilkan. </span>
+                            </li>
+                          )}
+                        </ul>
+                      </div>
+                    )}
+                  </>
+                )}
               </div>
             </li>
           ))}

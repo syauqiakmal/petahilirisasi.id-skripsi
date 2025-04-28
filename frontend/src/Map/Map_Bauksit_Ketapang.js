@@ -514,60 +514,60 @@ export const Map = ({ hideComponents }) => {
     };
   
     fetchRaster();
-  });
+  }, []);
   
-  // useEffect(() => {
-  //   const fetchRaster = async () => {
-  //     try {
-  //       const response = await fetch(
-  //         `http://localhost:8000/map/rasterbauksitA/`
-  //       );
-  //       if (!response.ok) {
-  //         throw new Error("Failed to fetch raster data");
-  //       }
-  
-  //       const rasterResponse = await response.json();
-  //       console.log("Raster Response:", rasterResponse);
+  useEffect(() => {
+    const fetchRaster = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:8000/map/rasterbauksitA/`
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch raster data");
+        }
+
+        const rasterResponse = await response.json();
+        console.log("Raster Response:", rasterResponse);
         
        
-  //       const newUploadedFile = {
-  //         name: "Perubahan Wilayah Pertambangan Bauksit Tahun 2000",
-  //         data: rasterResponse, // Base64 images
-  //         checked: false,
-  //         bounds: rasterResponse.bounds, // Bounding box
-  //       };
+        const newUploadedFile = {
+          name: "Perubahan Wilayah Pertambangan Bauksit Tahun 2000",
+          data: rasterResponse, // Base64 images
+          checked: false,
+          bounds: rasterResponse.bounds, // Bounding box
+        };
   
-  //       // Update state with new file and raster data
-  //       setUploadedFiles((prevUploadedFiles) => [
-  //         ...prevUploadedFiles,
-  //         newUploadedFile,
-  //       ]);
+        // Update state with new file and raster data
+        setUploadedFiles((prevUploadedFiles) => [
+          ...prevUploadedFiles,
+          newUploadedFile,
+        ]);
   
-  //       // Update rasterData state by appending new raster images
-  //       setRasterData((prevRasterData) => [
-  //         ...(prevRasterData || []),
-  //         ...rasterResponse.raster_images,
-  //       ]);
+        // Update rasterData state by appending new raster images
+        setRasterData((prevRasterData) => [
+          ...(prevRasterData || []),
+          ...rasterResponse.raster_images,
+        ]);
   
-  //       setBounds((prevBounds) =>
-  //         prevBounds
-  //           ? prevBounds.extend(L.latLngBounds(rasterResponse.bounds))
-  //           : L.latLngBounds(rasterResponse.bounds)
-  //       );
+        setBounds((prevBounds) =>
+          prevBounds
+            ? prevBounds.extend(L.latLngBounds(rasterResponse.bounds))
+            : L.latLngBounds(rasterResponse.bounds)
+        );
   
-  //       const map = mapRef.current
-  //       map.fitBounds(L.latLngBounds(rasterResponse.bounds), {
-  //         maxZoom: 15,
-  //       });
-  //       setIsNewUpload(false);
-  //     } catch (error) {
-  //       console.error("Error fetching raster:", error.message);
-  //       // Optionally show error to the user here, e.g., via a toast notification
-  //     }
-  //   };
+        const map = mapRef.current
+        map.fitBounds(L.latLngBounds(rasterResponse.bounds), {
+          maxZoom: 15,
+        });
+        setIsNewUpload(false);
+      } catch (error) {
+        console.error("Error fetching raster:", error.message);
+        // Optionally show error to the user here, e.g., via a toast notification
+      }
+    };
   
-  //   fetchRaster();
-  // }, []);
+    fetchRaster();
+  }, []);
 
   // useEffect(() => {
   //   const fetchRaster = async () => {
@@ -923,12 +923,13 @@ export const Map = ({ hideComponents }) => {
           rasterData.map((raster, index) => {
             console.log("Rendering raster image:", raster);
             console.log("index", index);
+            const rasterOpacityValue = rasterOpacity && rasterOpacity[index] ? rasterOpacity[index] : 0.8;
             return (
               <ImageOverlay
                 key={index}
                 url={`data:image/png;base64,${raster}`}
                 bounds={bounds}
-                opacity={rasterOpacity[index] || 0.8}
+                opacity={rasterOpacityValue}
                 interactive={true}
                 ref={imageOverlayRef}
                 eventHandlers={{
