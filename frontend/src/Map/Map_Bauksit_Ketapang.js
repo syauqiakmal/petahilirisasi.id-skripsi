@@ -83,10 +83,6 @@ export const Map = ({ hideComponents }) => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const handleToggleContinents = () => {
-    // setIsContinentsVisible(!isContinentsVisible);
-  };
-
   const handleShowFile = (index, checked) => {
     const updatedFiles = uploadedFiles.map((file, i) => {
       return i === index ? { ...file, checked } : file;
@@ -107,25 +103,37 @@ export const Map = ({ hideComponents }) => {
   };
 
   const handleRasterFile = (index, checked) => {
+    // Log the current state of uploaded files before updating
+    console.log("Before Update - uploadedFiles:", uploadedFiles);
+  
+    // Update the state with the new checked value
     const updatedFiles = uploadedFiles.map((file, i) =>
       i === index ? { ...file, checked } : file
     );
     setUploadedFiles(updatedFiles);
-
-    const selectedRasterFiles = updatedFiles.filter(
-      (file) =>
-        file.checked &&
-        (file.name.endsWith(".tif") || file.name.endsWith(".tiff") || file.name.endsWith("2000-2020") || file.name.endsWith("2005") ||
-        file.name.endsWith("2010")||
-        file.name.endsWith("2015")||
-        file.name.endsWith("2020"))
-    );
-
-    // Combine all raster data for rendering on map
-    const combinedRasterData = selectedRasterFiles.flatMap(
-      (file) => file.data.raster_images
-    );
-
+  
+    // Log the state after the update
+    console.log("After Update - uploadedFiles:", updatedFiles);
+  
+    // Filter selected raster files based on the checked state and the file names
+    const selectedRasterFiles = updatedFiles.filter((file) => {
+      const isValidFile = (file.name.endsWith(".tif") ||
+                           file.name.endsWith(".tiff") ||
+                           file.name.endsWith("2000-2020") ||
+                           file.name.endsWith("2000") ||
+                           file.name.endsWith("2010") ||
+                           file.name.endsWith("2015") ||
+                           file.name.endsWith("2020"));
+      console.log("File selected:", file.name, "checked:", file.checked, "valid:", isValidFile);
+      return file.checked && isValidFile;
+    });
+  
+    // Log selected raster files
+    console.log("Selected Raster Files:", selectedRasterFiles);
+  
+    // Combine all raster data for rendering on the map
+    const combinedRasterData = selectedRasterFiles.flatMap((file) => file.data.raster_images);
+  
     // Get bounds for the selected files
     let selectedBounds = null;
     if (selectedRasterFiles.length > 0) {
@@ -142,18 +150,17 @@ export const Map = ({ hideComponents }) => {
         }
       });
     }
-
-    console.log("Selected Raster Files:", selectedRasterFiles);
+  
+    // Log combined raster data and selected bounds
     console.log("Combined Raster Data:", combinedRasterData);
     console.log("Selected Bounds:", selectedBounds);
-
+  
+    // Update the rasterData and bounds state
     setRasterData(combinedRasterData.length > 0 ? combinedRasterData : null);
-    setBounds(
-      selectedBounds && selectedBounds.isValid() ? selectedBounds : null
-    );
+    setBounds(selectedBounds && selectedBounds.isValid() ? selectedBounds : null);
     setIsNewUpload(true); // Trigger map update
   };
-
+  
   const handleColumnSelection = (fileIndex, column, isChecked) => {
     const updatedFiles = uploadedFiles.map((file, index) => {
       if (index === fileIndex) {
@@ -361,6 +368,7 @@ export const Map = ({ hideComponents }) => {
           checked: true,
           bounds: rasterResponse.bounds, // Bounding box
           area: rasterResponse.area_result, 
+          index: 0
         };
   
         // Update state with new file and raster data
@@ -516,58 +524,60 @@ export const Map = ({ hideComponents }) => {
     fetchRaster();
   }, []);
   
-  useEffect(() => {
-    const fetchRaster = async () => {
-      try {
-        const response = await fetch(
-          `http://localhost:8000/map/rasterbauksitA/`
-        );
-        if (!response.ok) {
-          throw new Error("Failed to fetch raster data");
-        }
+  // useEffect(() => {
+  //   const fetchRaster = async () => {
+  //     try {
+  //       const response = await fetch(
+  //         `http://localhost:8000/map/rasterbauksitA/`
+  //       );
+  //       if (!response.ok) {
+  //         throw new Error("Failed to fetch raster data");
+  //       }
 
-        const rasterResponse = await response.json();
-        console.log("Raster Response:", rasterResponse);
+  //       const rasterResponse = await response.json();
+  //       console.log("Raster Response:", rasterResponse);
         
        
-        const newUploadedFile = {
-          name: "Perubahan Wilayah Pertambangan Bauksit Tahun 2000",
-          data: rasterResponse, // Base64 images
-          checked: false,
-          bounds: rasterResponse.bounds, // Bounding box
-        };
+  //       const newUploadedFile = {
+  //         name: "Bauxite Mining Cover Area in Ketapang, West Kalimantan 2000",
+  //         data: rasterResponse, // Base64 images
+  //         checked: false,
+  //         bounds: rasterResponse.bounds, // Bounding box
+  //         index: 1
+  //       };
   
-        // Update state with new file and raster data
-        setUploadedFiles((prevUploadedFiles) => [
-          ...prevUploadedFiles,
-          newUploadedFile,
-        ]);
+  //       // Update state with new file and raster data
+  //       setUploadedFiles((prevUploadedFiles) => [
+  //         ...prevUploadedFiles,
+  //         newUploadedFile,
+  //       ]);
   
-        // Update rasterData state by appending new raster images
-        setRasterData((prevRasterData) => [
-          ...(prevRasterData || []),
-          ...rasterResponse.raster_images,
-        ]);
+  //       // Update rasterData state by appending new raster images
+  //       setRasterData((prevRasterData) => [
+  //         ...(prevRasterData || []),
+  //         ...rasterResponse.raster_images,
+  //       ]);
   
-        setBounds((prevBounds) =>
-          prevBounds
-            ? prevBounds.extend(L.latLngBounds(rasterResponse.bounds))
-            : L.latLngBounds(rasterResponse.bounds)
-        );
+  //       setBounds((prevBounds) =>
+  //         prevBounds
+  //           ? prevBounds.extend(L.latLngBounds(rasterResponse.bounds))
+  //           : L.latLngBounds(rasterResponse.bounds)
+  //       );
   
-        const map = mapRef.current
-        map.fitBounds(L.latLngBounds(rasterResponse.bounds), {
-          maxZoom: 15,
-        });
-        setIsNewUpload(false);
-      } catch (error) {
-        console.error("Error fetching raster:", error.message);
-        // Optionally show error to the user here, e.g., via a toast notification
-      }
-    };
   
-    fetchRaster();
-  }, []);
+  //       const map = mapRef.current
+  //       map.fitBounds(L.latLngBounds(rasterResponse.bounds), {
+  //         maxZoom: 15,
+  //       });
+  //       setIsNewUpload(false);
+  //     } catch (error) {
+  //       console.error("Error fetching raster:", error.message);
+  //       // Optionally show error to the user here, e.g., via a toast notification
+  //     }
+  //   };
+  
+  //   fetchRaster();
+  // }, []);
 
   // useEffect(() => {
   //   const fetchRaster = async () => {
@@ -786,65 +796,7 @@ export const Map = ({ hideComponents }) => {
  
 
   // Get bounds everytime shapefile uploaded
-  useEffect(() => {
-    console.log("useEffect triggered with dependencies: ", {
-      geojsonData,
-      rasterData,
-      bounds,
-      isNewUpload,
-      uploadedFiles,
-    });
-
-    if (mapRef.current && isNewUpload) {
-      const map = mapRef.current;
-      let combinedBounds = null;
-
-      // Fit bounds for geojsonData
-      if (
-        geojsonData &&
-        geojsonData.features &&
-        geojsonData.features.length > 0
-      ) {
-        try {
-          const geoJsonLayer = L.geoJSON(geojsonData);
-          if (geoJsonLayer.getBounds().isValid()) {
-            combinedBounds = L.latLngBounds(geoJsonLayer.getBounds());
-          } else {
-            console.error("Invalid bounds for geojsonData:", geojsonData);
-          }
-        } catch (error) {
-          console.error("Error creating GeoJSON layer:", error);
-        }
-      }
-
-      // Fit bounds for rasterData
-      if (rasterData && rasterData.length > 0) {
-        rasterData.forEach((raster) => {
-          if (raster.bounds) {
-            const rasterBounds = L.latLngBounds(raster.bounds);
-            if (rasterBounds.isValid()) {
-              combinedBounds = combinedBounds
-                ? combinedBounds.extend(rasterBounds)
-                : rasterBounds;
-            }
-          }
-        });
-      }
-
-      // Check if combinedBounds is valid before fitting map bounds
-      if (combinedBounds && combinedBounds.isValid()) {
-        map.fitBounds(combinedBounds, {
-          maxZoom: 12,
-        });
-      } else {
-        console.error("Invalid combinedBounds:", combinedBounds);
-      }
-
-      setIsNewUpload(false); // Reset isNewUpload after fitting bounds
-
-      console.log("Bounds fit completed, isNewUpload reset");
-    }
-  }, [geojsonData, rasterData, bounds, isNewUpload, uploadedFiles]);
+ 
 
   const position = [-0.04428, 110.18154];
 
@@ -867,13 +819,8 @@ export const Map = ({ hideComponents }) => {
             handleOptionChange={handleOptionChange}
             isMenuOpen={isMenuOpen}
             handleMenuToggle={handleMenuToggle}
-            handleToggleContinents={handleToggleContinents}
             uploadedFiles={uploadedFiles}
-            handleShowFile={handleShowFile}
             handleRasterFile={handleRasterFile}
-            // handleGeoJSONUpload={handleGeoJSONUpload}
-            handleFileUpload={handleFileUpload}
-            handleColumnSelection={handleColumnSelection}
           />
         )}
 
@@ -896,34 +843,13 @@ export const Map = ({ hideComponents }) => {
             attribution='Map data: &copy; <a href="https://www.openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
           />
         )}
-        {/* {renderGeoJSONLayers()} */}
-        {/* {isContinentsVisible && <ContinentsPolygonLayer data={continents} />} */}
-        {geojsonData &&
-          uploadedFiles.map(
-            (file, index) =>
-              file.checked && // Only show checked files
-              !file.name.endsWith(".tif") &&
-              !file.name.endsWith(".tiff") &&
-              file.data && (
-                <GeoJSON
-                  key={index}
-                  data={file.data}
-                  style={(feature) =>
-                    getFeatureStyle(feature, selectedProperty)
-                  }
-                  onEachFeature={(feature, layer) =>
-                    onEachFeature(feature, layer, uploadedFiles)
-                  }
-                />
-              )
-          )}
 
-        {rasterData &&
-          bounds &&
-          rasterData.map((raster, index) => {
-            console.log("Rendering raster image:", raster);
-            console.log("index", index);
-            const rasterOpacityValue = rasterOpacity && rasterOpacity[index] ? rasterOpacity[index] : 0.8;
+        {rasterData && bounds && rasterData.map((raster, index) => {
+          const rasterOpacityValue = rasterOpacity && rasterOpacity[index] ? rasterOpacity[index] : 0.8;
+
+          // Only render raster image if the corresponding file is checked
+          const file = uploadedFiles[index]; 
+          if (file && file.checked) {
             return (
               <ImageOverlay
                 key={index}
@@ -933,13 +859,14 @@ export const Map = ({ hideComponents }) => {
                 interactive={true}
                 ref={imageOverlayRef}
                 eventHandlers={{
-                  click: (e) => {
-                    handleClick(e, index);
-                  },
+                  click: (e) => handleClick(e, index),
                 }}
               />
             );
-          })}
+          }
+          return null; // Return null if the file is unchecked
+        })}
+
         <ScaleControl position="bottomleft" imperial={true} />
         <GeomanToolbar
           setcolorPickerRef={(ref) =>
@@ -950,54 +877,7 @@ export const Map = ({ hideComponents }) => {
 
         <ToggleLegend onToggle={handleLegendToggle}/>
         <Calculate isOpen={isLegendOpen} area={area} miningData={miningData}/>
-        {/* <Legend isOpen={isLegendOpen} isBits={false}/> */}
-
-        {uploadedFiles.map((file, index) => {
-          if (
-            file.checked && // Only show checked files
-            !file.name.endsWith(".tif") &&
-            !file.name.endsWith(".tiff") &&
-            !file.name.endsWith("2000-2020") && 
-            !file.name.endsWith("2000")&&     
-            !file.name.endsWith("2005") &&
-            !file.name.endsWith("2010")&&
-            !file.name.endsWith("2015")&&
-            !file.name.endsWith("2020")&&
-            file.data
-          ) {
-            return (
-              <button
-                key={index} // Ensure each button has a unique key
-                onClick={() => {
-                  togglePopup();
-                }}
-                style={{
-                  position: "absolute",
-                  top: "150px",
-                  right: "20px",
-                  width: "50px",
-                  height: "50px",
-                  borderRadius: "50%",
-                  backgroundColor: "white",
-                  color: "black",
-                  border: "none",
-                  cursor: "pointer",
-                  backgroundImage: `url(${logo})`,
-                  backgroundRepeat: "no-repeat",
-                  backgroundSize: "40px",
-                  backgroundPosition: "center",
-                  zIndex: 1000,
-                  transition: "transform 0.3s ease-out",
-                }}
-                onMouseEnter={(e) => (e.target.style.transform = "scale(1.1)")}
-                onMouseLeave={(e) => (e.target.style.transform = "scale(1)")}
-              />
-           
-           
-            );
-          }
-          return null; // Return null for files that do not meet the conditions
-        })}            
+        {/* <Legend isOpen={isLegendOpen} isBits={false}/> */}          
 
   {/* <PopupComponentRaster/> */}
 

@@ -255,12 +255,12 @@ const Calculate = ({ isOpen, area, miningData }) => {
 
 
 
-      <h4 style={{ textAlign: "center", margin: "10px 0" }}>Area Size (ha<sup>2</sup>)</h4>
+      <h4 style={{ textAlign: "center", margin: "10px 0" }}>Area Size (ha)</h4>
       <table style={{ width: "100%", borderCollapse: "collapse", borderRadius: "8px", overflow: "hidden", backgroundColor: "rgba(255, 255, 255, 0.15)", backdropFilter: "blur(1px)" }}>
         <thead>
           <tr style={{ background: "#08709d", color: "white", textAlign: "left" }}>
             <th style={{ padding: "10px", backgroundColor: "rgba(255, 255, 255, 0.15)", }}>Category</th>
-            <th style={{ padding: "10px", backgroundColor: "rgba(255, 255, 255, 0.15)", }}>Area (ha<sup>2</sup>)</th>
+            <th style={{ padding: "10px", backgroundColor: "rgba(255, 255, 255, 0.15)", }}>Area (ha)</th>
           </tr>
         </thead>
         <tbody>
