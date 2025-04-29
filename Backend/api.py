@@ -206,16 +206,20 @@ async def calculate_area_from_single_band(data: np.ndarray, transform, threshold
 
         # Resolusi Landsat = 30m per piksel -> 900 m² per piksel
         pixel_area = 30 * 30  # 900 m²
+        
 
         area_results = {}
         for category, (min_val, max_val) in thresholds.items():
+            total_pixel = 0
             mask = (data[0] >= min_val) & (data[0] <= max_val)
             pixel_count = np.sum(mask)  # Hitung jumlah piksel dalam kategori ini
-
+            total_pixel += pixel_count
+            
             area_m2 = pixel_count * pixel_area  # Konversi ke luas dalam meter persegi
             area_results[category] = int(area_m2)
 
-            print(f"{category} - Threshold: ({min_val}, {max_val}), Pixels Found: {pixel_count}, Area (m²): {area_m2}")
+            print(f"{category} - Threshold: ({min_val}, {max_val}), Pixels Found: {pixel_count}, Area (m²): {area_m2}, Total Pixel : {total_pixel}")
+            
 
         return area_results
 
