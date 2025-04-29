@@ -1,9 +1,9 @@
 import logo from "../Logo/Printer.png";
 import { Map } from "../Map/Map_Nikel_Morowali"; // Peta pertama
 import { Map as Map2 } from "../Map/Map_Kuarsa_Sarolangun"; // Peta kedua
-import { Map as Map3 } from "../Map/Map_Bauksit_Ketapang"; // Peta ketiga
+import { Map as Map3 } from "../Map/Map_Bauksit_Sanggau"; // Peta ketiga
 import { Map as Map4 } from "../Map/Map_copy_BIT"; // Peta keempat
-import { Map as Map5 } from "../Map/Map_Nikel_Weda"; 
+import { Map as Map5 } from "../Map/Map_Nikel_Halmahera"; 
 
 //Mineral sidebar menu
 import ToggleMineralMenu from "../layers/ToggleMineralMenu";

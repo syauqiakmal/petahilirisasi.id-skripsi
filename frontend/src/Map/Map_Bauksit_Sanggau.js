@@ -363,7 +363,7 @@ export const Map = ({ hideComponents }) => {
        
         const newUploadedFile = {
           // name: "Perubahan Wilayah Pertambangan Bauksit Tahun 2000-2020",
-          name: "Bauxite Mining Area Changes in Ketapang, West Kalimantan 2000-2020",
+          name: "Bauxite Mining Area Changes in Sanggau, West Kalimantan 2000-2020",
           data: rasterResponse, // Base64 images
           checked: true,
           bounds: rasterResponse.bounds, // Bounding box
@@ -397,21 +397,20 @@ export const Map = ({ hideComponents }) => {
         map.fitBounds(L.latLngBounds(rasterResponse.bounds), {
           maxZoom: 15,
         });
-
-        //TODO: change text
+        
         const markerLatLng = [-0.03, 110.1975]
         const mapMarker = L.marker(markerLatLng, {icon: customIcon}).addTo(map);
         mapMarker.bindPopup(`
           <div style="width: 320px; height: 400px; font-size: 12px; overflow-y: auto;">
-              <h4 style="text-align: center; margin-bottom: 8px;">WIUP - Bauksit Marau Ketapang</h4>
+              <h4 style="text-align: center; margin-bottom: 8px;">WIUP - Bauksit Tayan, Sanggau</h4>
               <table border="1" style="border-collapse: collapse; width: 100%; table-layout: fixed;">
                   <tr>
                       <th style="width: 40%;">Lokasi Tambang</th>
-                      <td>Marau, Ketapang</td>
+                      <td>Tayan, Sanggau</td>
                   </tr>
                   <tr>
                       <th>Kabupaten</th>
-                      <td>Ketapang</td>
+                      <td>Sanggau</td>
                   </tr>
                   <tr>
                       <th>Provinsi</th>
@@ -423,7 +422,7 @@ export const Map = ({ hideComponents }) => {
                   </tr>
                   <tr>
                       <th>Luas Wilayah (Ha)</th>
-                      <td>15,670.00</td>
+                      <td>1,028.87</td>
                   </tr>
                   <tr>
                       <th>Jenis Izin</th>
@@ -435,7 +434,7 @@ export const Map = ({ hideComponents }) => {
                   </tr>
                   <tr>
                       <th>Nama Perusahaan</th>
-                      <td>CITA MINERAL INVESTINDO TBK</td>
+                      <td>BINTANG TAYAN MINERAL</td>
                   </tr>
                   <tr>
                       <th>Pejabat Berwenang</th>
@@ -443,11 +442,11 @@ export const Map = ({ hideComponents }) => {
                   </tr>
                   <tr>
                       <th>Nomor SK</th>
-                      <td title="503/109/MINERBA/DPMPTSP.C/2017" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">503/109/MINERBA/DPMPTSP.C/2017</td>
+                      <td title="868/DISTAMBEN/2016" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">868/DISTAMBEN/2016</td>
                   </tr>
                   <tr>
                       <th>Status C&C</th>
-                      <td>CNC-3</td>
+                      <td>CNC-9</td>
                   </tr>
                   <tr>
                       <th>Tahapan Kegiatan</th>
@@ -459,7 +458,7 @@ export const Map = ({ hideComponents }) => {
                   </tr>
                   <tr>
                       <th>ID Kabupaten</th>
-                      <td>04</td>
+                      <td>03</td>
                   </tr>
                   <tr>
                       <th>ID Provinsi</th>
@@ -475,41 +474,41 @@ export const Map = ({ hideComponents }) => {
                   </tr>
                   <tr>
                       <th>Single ID</th>
-                      <td>3361042172014100</td>
+                      <td>3361032172014041</td>
                   </tr>
                   <tr>
                       <th>Tanggal Berlaku SK</th>
-                      <td>3 Agustus 2017</td>
+                      <td>24 Mei 2010</td>
                   </tr>
                   <tr>
                       <th>Tanggal Berakhir SK</th>
-                      <td>24 Mei 2029</td>
+                      <td>23 Mei 2030</td>
                   </tr>
               </table>
           </div>
       `);
       
       setMiningData({
-        "Lokasi Tambang": "Marau, Ketapang",
-        "Kabupaten": "Ketapang",
+        "Lokasi Tambang": "Tayan, Sanggau",
+        "Kabupaten": "Sanggau",
         "Provinsi": "Kalimantan Barat",
         "Komoditas": "Bauksit",
-        "Luas Wilayah (Ha)": "15,670.00",
+        "Luas Wilayah (Ha)": "1,028.87",
         "Jenis Izin": "IUP",
         "Jenis Badan Usaha": "PT",
-        "Nama Perusahaan": "CITA MINERAL INVESTINDO TBK",
+        "Nama Perusahaan": "BINTANG TAYAN MINERAL",
         "Pejabat Berwenang": "Gubernur",
-        "Nomor SK": "503/109/MINERBA/DPMPTSP.C/2017",
-        "Status C&C": "CNC-3",
+        "Nomor SK": "868/DISTAMBEN/2016",
+        "Status C&C": "CNC-9",
         "Tahapan Kegiatan": "Operasi Produksi",
         "Pulau": "Kalimantan",
-        "ID Kabupaten": "04",
+        "ID Kabupaten": "03",
         "ID Provinsi": "61",
         "Kode Jenis Komoditas": "17",
         "Kode Komoditas": "Mineral Logam",
-        "Single ID": "3361042172014100",
-        "Tanggal Berlaku SK": "3 Agustus 2017",
-        "Tanggal Berakhir SK": "24 Mei 2029",
+        "Single ID": "3361032172014041",
+        "Tanggal Berlaku SK": "24 Mei 2010",
+        "Tanggal Berakhir SK": "23 Mei 2030",
       });
       
       
